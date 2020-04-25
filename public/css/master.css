@@ -1,0 +1,154 @@
+
+html,body{
+    margin:0;  
+}
+
+a:hover{
+    text-decoration: none;
+}
+/* Welcome Page Styles */
+
+
+.welcome-container{
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #E6EEF2;
+}
+
+
+.title{
+    margin-bottom: 2%;
+}
+
+.offset-col-4-and-half{
+    margin-left: 37.5%;
+}
+
+.login-form label{
+    font-weight: bold;
+}
+
+.login-form button{
+    font-weight: bolder;
+}
+
+.form-group div{
+    margin-top: 2%;
+    padding: 1% 2%;
+}
+
+/* Header Styles */
+
+.header{
+    height: 10vh;
+    width: 100vw;
+    display: inline-grid;
+    grid-template-columns: 5% 20% auto 20% 5%;
+    border-bottom: 3px solid #535B80;
+}
+
+.business-header{
+    grid-column-start: 2;
+    grid-column-end: 3;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+}
+
+.business-header p{
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.user-header{
+    grid-column-start: 4;
+    grid-column-end: 5;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.user-header p{
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 400;
+}
+
+/* Basic Grid Structre */
+
+.main-container{
+    display: inline-grid;
+    grid-template-columns: 15% auto;
+    width: 100vw;
+}
+
+.nav{
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+
+.info-container{
+    grid-column-start: 2;
+    grid-column-end: 3;
+    margin: 2%;
+}
+
+/* Nav Styles */
+
+.nav{
+    display: flex;
+    flex-direction: column;
+    height: 90vh;
+    border-right: 3px solid #535B80;
+}
+
+.nav-item{
+    height: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid lightgrey;
+    color: #353535;
+}
+
+.nav-item-child{
+    height: 7%;
+    display: flex;
+    align-items: center;
+    margin-left: 50%;
+    color: #353535;
+}
+
+.nav-item:last-child{
+    border-top: 1px solid lightgrey;
+}
+
+.active{
+    background-color: #B8C9D9;
+}
+
+.active-child{
+    font-weight: bold;
+}
+
+/* Maestros - Legajos Styles */
+
+.menu{
+    display: grid;
+    grid-template-columns: 8% 8% 8% auto;
+    margin: 3vh 0;
+}
+
+.menu a{
+    display: flex;
+    border: 1px solid lightgrey;
+    justify-content: center;
+    align-items: center;
+    height: 5vh;
+}
