@@ -10,7 +10,7 @@ class Client extends Model
         return $this->hasMany('App\User');
     }
 
-    public function file(){
+    public function employee(){
         return $this->hasMany('App\Employee');
     }
 }

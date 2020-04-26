@@ -20,10 +20,10 @@ class CreateEmployeesTable extends Migration
             $table->integer('employee_number')->nullable(false);
             $table->boolean('active')->default(true);
             $table->date('entry_date')->nullable(false);
-            $table->date('leave_date');
+            $table->date('leave_date')->nullable(true);
             $table->integer('vacations');
             $table->integer('scoring');
-            
+
             $table->foreign('client_id')->references('id')->on('clients');
             $table->timestamps();
         });

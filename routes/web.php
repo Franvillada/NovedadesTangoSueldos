@@ -26,5 +26,11 @@ Route::post('/register','UsersController@register')->name('register');
 Route::get('/kpi','AppController@showKpi')->name('kpi')->middleware('auth');
 
 Route::get('/maestros/legajos','AppController@indexLegajos')->name('legajos');
+Route::get('/maestros/nuevo_legajo','AppController@showNuevoLegajoForm')->name('nuevo_legajo');
+Route::post('/maestros/nuevo_legajo','AppController@añadirLegajo')->name('nuevo_legajo');
+Route::get('maestros/editar_legajo', 'AppController@showEditarLegajoForm')->name('editar_legajo');
+Route::post('maestros/editar_legajo', 'AppController@editarLegajo')->name('editar_legajo');
+Route::post('maestros/eliminar_legajo', 'AppController@eliminarLegajo')->name('eliminar_legajo');
+
 Route::get('/maestros/novedades','AppController@indexNovedades')->name('novedades');
 Route::get('/maestros/usuarios','AppController@indexUsuarios')->name('usuarios');

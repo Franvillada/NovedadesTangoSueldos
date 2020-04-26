@@ -6,11 +6,19 @@
     </div>
     
     <div class="menu">
-        <a href="" class="btn btn-success">Nuevo</a>
-        <a href="">Editar</a>
+        <a href="{{ route('nuevo_legajo') }}" class="btn btn-success" id="nuevo_legajo">Nuevo</a>
+        <form action="{{ route('editar_legajo') }}" method="GET" class='editar_legajo'>
+            @csrf
+            <input type="hidden" name="legajo" id="legajo">
+            <button class=" btn btn-success display_none" id="editar_legajo" type="submit">Editar</button>
+        </form>
+        <form action="{{ route('eliminar_legajo') }}" method="POST" class="eliminar_legajo">
+            @csrf
+            <button class=" btn btn-danger display_none" id="eliminar_legajo" type="submit">Eliminar</button>
+        </form>
     </div>
 
-    <table class="table">
+    <table class="table" id="legajo_table">
         <thead>
             <tr>
             <th scope="col">Legajo</th>
