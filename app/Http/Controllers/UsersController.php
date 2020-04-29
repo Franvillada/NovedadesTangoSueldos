@@ -88,8 +88,7 @@ class UsersController extends Controller
 
     public function login(Request $request){
         $credentials = $this->validate($request, [
-            'email' => 'bail|required|email|string',
-            'password' => 'required|string'
+            'email' => 'bail|required|email|string'
         ]);
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'active' => 1])){

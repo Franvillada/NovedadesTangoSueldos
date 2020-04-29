@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Employee;
+use App\User;
 
 class AppController extends Controller
 {
@@ -12,7 +13,7 @@ class AppController extends Controller
     }
     public function indexLegajos(){
         $active = ['maestros','legajos'];
-        $empleados = auth()->user()->client->employee;
+        $empleados = Employee::where('client_id',auth()->user()->client->id)->paginate(10);
         return view('maestros.legajos') ->with('active',$active)
                                         ->with('empleados',$empleados);
     }
@@ -22,7 +23,9 @@ class AppController extends Controller
     }
     public function indexUsuarios(){
         $active = ['maestros','usuarios'];
-        return view('maestros.usuarios')->with('active',$active);
+        $users = auth()->user()->client->user;
+        return view('maestros.usuarios')->with('active',$active)
+                                        ->with('users',$users);
     }
 
     public function showNuevoLegajoForm(){
@@ -38,7 +41,7 @@ class AppController extends Controller
             'vacations' => 'integer|required',
             'scoring' => 'integer'
         ]);
-
+    
         $newLegajo = new Employee();
         $newLegajo->employee_number = $request->legajo;
         $newLegajo->name = $request->name;
@@ -78,7 +81,17 @@ class AppController extends Controller
        return redirect()->route('legajos'); 
     }
 
-    public function eliminarLegajo(Request $request){
+    public function cambiarEstadoLegajo(Request $request){
+        $empleado = Employee::where('employee_number', $request->legajo)->where('client_id', auth()->user()->client->id)->get()->first();
+        $empleado->active = !$empleado->active;
+        $empleado->save();
+        return redirect()->route('legajos');
+    }
 
+    public function inhabilitarUsuario(Request $request){
+        $user = User::where('username',$request->usuario)->where('client_id', auth()->user()->client->id)->get()->first();
+        $user->active = 0;
+        $user->save();
+        return redirect()->route('usuarios');
     }
 }

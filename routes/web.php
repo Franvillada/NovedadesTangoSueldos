@@ -30,7 +30,12 @@ Route::get('/maestros/nuevo_legajo','AppController@showNuevoLegajoForm')->name('
 Route::post('/maestros/nuevo_legajo','AppController@añadirLegajo')->name('nuevo_legajo');
 Route::get('maestros/editar_legajo', 'AppController@showEditarLegajoForm')->name('editar_legajo');
 Route::post('maestros/editar_legajo', 'AppController@editarLegajo')->name('editar_legajo');
-Route::post('maestros/eliminar_legajo', 'AppController@eliminarLegajo')->name('eliminar_legajo');
+Route::post('', 'AppController@cambiarEstadoLegajo')->name('cambiar_estado_legajo');
 
 Route::get('/maestros/novedades','AppController@indexNovedades')->name('novedades');
 Route::get('/maestros/usuarios','AppController@indexUsuarios')->name('usuarios');
+Route::get('/maestros/nuevo_usuario','AppController@showNuevousuarioForm')->name('nuevo_usuario');
+Route::post('/maestros/nuevo_usuario','AppController@añadirusuario')->name('nuevo_usuario');
+Route::get('maestros/editar_usuario', 'AppController@showEditarusuarioForm')->name('editar_usuario');
+Route::post('maestros/editar_usuario', 'AppController@editarusuario')->name('editar_usuario');
+Route::post('maestros/inhabilitar_usuario', 'AppController@inhabilitarusuario')->name('inhabilitar_usuario');

@@ -15,14 +15,14 @@ class CreateEmployeesTable extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('client_id')->nullable(false);
+            $table->unsignedBigInteger('client_id');
             $table->string('name',60);
-            $table->integer('employee_number')->nullable(false);
+            $table->integer('employee_number');
             $table->boolean('active')->default(true);
-            $table->date('entry_date')->nullable(false);
+            $table->date('entry_date');
             $table->date('leave_date')->nullable(true);
-            $table->integer('vacations');
-            $table->integer('scoring');
+            $table->integer('vacations')->nullable(true);
+            $table->integer('scoring')->nullable(true);
 
             $table->foreign('client_id')->references('id')->on('clients');
             $table->timestamps();

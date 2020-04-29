@@ -15,9 +15,13 @@ class CreateNoveltysTable extends Migration
     {
         Schema::create('noveltys', function (Blueprint $table) {
             $table->id();
-            $table->string('code',10)->unique()->nullable(false);
+            $table->string('code',10)->unique();
             $table->string('description',40);
-            $table->string('unit',15)->nullable(false);
+            $table->string('unit',15);
+            $table->boolean('active')->default(true);
+            $table->boolean('absence')->default(false);
+            $table->boolean('work_accident')->default(false);
+            $table->boolean('vacation')->default(false);
             $table->timestamps();
         });
     }

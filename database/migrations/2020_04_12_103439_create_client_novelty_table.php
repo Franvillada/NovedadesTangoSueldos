@@ -15,8 +15,8 @@ class CreateClientNoveltyTable extends Migration
     {
         Schema::create('client_novelty', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('novelty_id')->nullable(false);
-            $table->unsignedBigInteger('client_id')->nullable(false);
+            $table->unsignedBigInteger('novelty_id');
+            $table->unsignedBigInteger('client_id');
             $table->boolean('active')->default(true);
 
             $table->foreign('novelty_id')->references('id')->on('noveltys');

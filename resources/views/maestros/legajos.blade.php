@@ -5,20 +5,21 @@
         <h3>Maestros - Legajos</h3>
     </div>
     
-    <div class="menu">
-        <a href="{{ route('nuevo_legajo') }}" class="btn btn-success" id="nuevo_legajo">Nuevo</a>
-        <form action="{{ route('editar_legajo') }}" method="GET" class='editar_legajo'>
+    <div class="menu_maestros" id="menu_maestros">
+        <a href="{{ route('nuevo_legajo') }}" class="btn btn-success" id="nuevo">Nuevo</a>
+        <form action="{{ route('editar_legajo') }}" method="GET" class='editar'>
             @csrf
-            <input type="hidden" name="legajo" id="legajo">
-            <button class=" btn btn-success display_none" id="editar_legajo" type="submit">Editar</button>
+            <input type="hidden" name="legajo" id="editar_input">
+            <button class=" btn btn-success display_none" id="editar" type="submit">Editar</button>
         </form>
-        <form action="{{ route('eliminar_legajo') }}" method="POST" class="eliminar_legajo">
+        <form action="{{ route('cambiar_estado_legajo') }}" method="POST" class="inhabilitar">
             @csrf
-            <button class=" btn btn-danger display_none" id="eliminar_legajo" type="submit">Eliminar</button>
+            <input type="hidden" name="legajo" id="cambiar_estado_input">
+            <button class=" btn display_none" id="cambiar_estado" type="submit"></button>
         </form>
     </div>
 
-    <table class="table" id="legajo_table">
+    <table class="table" id="table">
         <thead>
             <tr>
             <th scope="col">Legajo</th>
@@ -27,7 +28,7 @@
             <th scope="col">Egreso</th>
             <th scope="col">Vacaciones</th>
             <th scope="col">Scoring</th>
-            <th scope="col">Activo</th>
+            <th scope="col">Estado</th>
             </tr>
         </thead>
         <tbody>
@@ -40,7 +41,7 @@
                 <td>{{ $empleado->leave_date }}</td>
                 <td>{{ $empleado->vacations }}</td>
                 <td>{{ $empleado->scoring }}</td>
-                <td>{{ $empleado->active }}</td>
+                <td>{{ ($empleado->active) ? 'Habilitado' : 'Inhabilitado' }}</td>
             </tr>
             @endforeach
         @else
@@ -50,4 +51,5 @@
         @endif
         </tbody>
 </table>
+{{ $empleados->links() }}
 @endsection

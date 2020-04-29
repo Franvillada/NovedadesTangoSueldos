@@ -8,6 +8,11 @@
 
     <form action="{{ route('editar_legajo') }}" method="POST" class="legajo_form">
         @csrf
+        <div class="form-group legajo_button">
+            <button class="btn btn-success" type="submit">Aceptar</button>
+            <button class="btn btn-danger" type="submit">Cancelar</button>
+        </div>
+
         <div class="form-group legajo_numero">
             <label for="legajo">Numero de Legajo:</label>
             <input  class="form-control" 
@@ -47,6 +52,19 @@
             </div>
         </div>
 
+        <div class="form-group legajo_fecha">
+            <label for="leave_date">Dia de Egreso:</label>
+            <input  class="form-control" 
+                    type="date" 
+                    name="leave_date" 
+                    id="leave_date"
+                    value="{{$empleado->leave_date}}" 
+                    >
+            <div class="{{ $errors->has('leave_date') ? 'alert alert-danger' : '' }}">
+                {!! $errors->first('leave_date', '<span>:message</span>') !!}
+            </div>
+        </div>
+
         <div class="form-group legajo_vacaciones">
             <label for="vacations">Vacaciones correspondientes:</label>
             <input  class="form-control" 
@@ -65,9 +83,6 @@
                     id="scoring"
                     value="{{ $empleado->scoring }}"
                     placeholder="">    
-        </div>
-        <div class="form-group legajo_button">
-            <button class="btn btn-success" type="submit">Editar Legajo</button>
         </div>
         
     </form>

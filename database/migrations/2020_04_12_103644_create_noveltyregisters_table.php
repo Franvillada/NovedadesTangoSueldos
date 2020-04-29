@@ -15,10 +15,10 @@ class CreateNoveltyregistersTable extends Migration
     {
         Schema::create('noveltyregisters', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('employee_id')->nullable(false);
-            $table->double('quantity',4,2)->nullable(false);
-            $table->date('date')->nullable(false);
-            $table->unsignedBigInteger('novelty_id')->nullable(false);
+            $table->unsignedBigInteger('employee_id');
+            $table->double('quantity',4,2);
+            $table->date('date');
+            $table->unsignedBigInteger('novelty_id');
             $table->boolean('informed')->default(false);
 
             $table->foreign('employee_id')->references('id')->on('employees');

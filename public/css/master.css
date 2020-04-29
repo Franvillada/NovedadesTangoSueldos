@@ -140,13 +140,13 @@ a:hover{
 
 /* Maestros - Legajos Styles */
 
-.menu{
+.menu_maestros{
     display: grid;
     grid-template-columns: 10% 10% 10%;
     margin: 3vh 0;
 }
 
-.menu .btn{
+.menu_maestros .btn{
     width: 75%;
     border: 1px solid lightgray;
 }
@@ -161,60 +161,17 @@ a:hover{
 
 .legajo_form{
     display: grid;
-    grid-template-columns: 3;
-    grid-template-rows: 4;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 0.5fr 1fr 1fr 1fr;
     margin: 8% 15% 0 15%;
-}
-
-.legajo_numero{
-    grid-column-start: 1;
-    grid-column-end: 2;
-    grid-row-start: 1;
-    grid-row-end: 2;
-}
-
-.legajo_nombre{
-    grid-column-start: 3;
-    grid-column-end: 4;
-    grid-row-start: 1;
-    grid-row-end: 2;
-}
-
-.legajo_fecha{
-    grid-column-start: 1;
-    grid-column-end: 2;
-    grid-row-start: 2;
-    grid-row-end: 4;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.legajo_vacaciones{
-    grid-column-start: 3;
-    grid-column-end: 4;
-    grid-row-start: 2;
-    grid-row-end: 3;
-}
-
-.legajo_scoring{
-    grid-column-start: 3;
-    grid-column-end: 4;
-    grid-row-start: 3;
-    grid-row-end: 4;
 }
 
 .legajo_button{
     grid-column-start: 1;
-    grid-column-end: 4;
-    grid-row-start: 4;
-    grid-row-end: 5;
-    font-weight: bold;
-    display: flex;
-    justify-content: center;
-    margin-top: 5%;
+    grid-column-end: 3;
+    margin: 0% 0%;
 }
 
-.legajo_button button{
-    width: 15%;
+.legajo_form input{
+    width: 75%;
 }
