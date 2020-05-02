@@ -20,6 +20,11 @@ Route::get('/', function () {
 Route::post('/login','UsersController@login')->name('login');
 
 Route::middleware('auth')->group(function(){
+
+    Route::get('/elegir_empresa' , 'AppController@elegirEmpresaForm')->name('elegir_empresa');
+    Route::post('/elegir_empresa', 'AppController@elegirEmpresa')->name('elegir_empresa');
+    Route::get('/backend','BackendController@index')->name('backend');
+
     Route::post('/logout','UsersController@logout')->name('logout');
     
     Route::get('/maestros/usuarios','UsersController@indexUsuarios')->name('usuarios');
@@ -37,6 +42,7 @@ Route::middleware('auth')->group(function(){
     Route::get('maestros/editar_legajo', 'EmployeesController@showEditarLegajoForm')->name('editar_legajo');
     Route::post('maestros/editar_legajo', 'EmployeesController@editarLegajo')->name('editar_legajo');
     Route::post('maestros/cambiar_estado_legajo', 'EmployeesController@cambiarEstadoLegajo')->name('cambiar_estado_legajo');
+    Route::post('maestros/importar_legajos','EmployeesController@importarLegajos')->name('importar_legajos');
     
     Route::get('/maestros/novedades','NoveltysController@indexNovedades')->name('novedades');
 

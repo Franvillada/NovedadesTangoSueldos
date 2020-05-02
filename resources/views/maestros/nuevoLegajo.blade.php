@@ -8,7 +8,7 @@
 
     <form action="" method="POST" class="maestros_form">
         @csrf
-        <div class="form-group legajo_button">
+        <div class="form-group accept_cancel_button">
             <button class="btn btn-success" type="submit">Aceptar</button>
             <button class="btn btn-danger" type="submit">Cancelar</button>
         </div>

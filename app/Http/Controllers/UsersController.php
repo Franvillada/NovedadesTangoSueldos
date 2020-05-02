@@ -28,6 +28,9 @@ class UsersController extends Controller
         ]);
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'active' => 1])){
+            if(auth()->user()->role->role == 'superadmin'){
+                return redirect()->route('elegir_empresa');
+            }
             return redirect()->route('kpi');
         }
         return back()
@@ -67,6 +70,7 @@ class UsersController extends Controller
             }
         }
         $newUser->save();
+        return redirect()->route('usuarios');
     }
 
     public function showEditarUsuarioForm(Request $request){

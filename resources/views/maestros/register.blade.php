@@ -8,7 +8,7 @@
 
 <form action="" method="POST" class="maestros_form">
     @csrf
-    <div class="form-group legajo_button">
+    <div class="form-group accept_cancel_button">
         <button class="btn btn-success" type="submit">Aceptar</button>
         <button class="btn btn-danger" type="submit">Cancelar</button>
     </div>
@@ -53,7 +53,7 @@
         <label for="password">Cual es el rol que se le asignara al usuario en el sistema?</label>
         <select name="role" id="role" class="form-control">
             <option value="admin">Administrador</option>
-            <option value="parcial">Usuario General</option>
+            <option value="general">Usuario General</option>
         </select>        
     </div>
     

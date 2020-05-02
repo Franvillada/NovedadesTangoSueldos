@@ -17,6 +17,13 @@
             <input type="hidden" name="legajo" id="cambiar_estado_input">
             <button class=" btn display_none" id="cambiar_estado" type="submit"></button>
         </form>
+        <form action="{{ route('importar_legajos') }}" method="post" class="importar" enctype="multipart/form-data">
+            @csrf
+            <label for="file" class="btn btn-success custom-file">
+                Importar desde Excel
+            </label>
+            <input id="file" name="file" type="file" class="d-none" onchange="form.submit()"/>
+        </form>
     </div>
 
     <table class="table" id="table">

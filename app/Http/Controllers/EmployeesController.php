@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Employee;
 use Illuminate\Http\Request;
+use App\Imports\EmployeesImport;
+use Maatwebsite\Excel\Facades\Excel;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
 
 class EmployeesController extends Controller
 {
@@ -88,4 +91,35 @@ class EmployeesController extends Controller
         $empleado->save();
         return redirect()->route('legajos');
     }
+
+    public function importarLegajos(Request $request)
+    {
+        $newEmployees = Excel::toCollection(new EmployeesImport(), $request->file('file'));
+        $empleados = Employee::where('client_id',auth()->user()->client->id)->get();
+        foreach($newEmployees[0] as $employee){
+            $saved = 0;
+            foreach($empleados as $empleado){
+                if($empleado->employee_number == $employee['legajo']){
+                    $empleado->name = $employee['nombre'];
+                    $empleado->entry_date = Date::excelToDateTimeObject($employee['fecha_de_entrada']);
+                    $empleado->vacations = $employee['vacaciones_correspondientes'];
+                    $empleado->scoring = $employee['scoring'];
+                    $empleado->save();
+                    $saved = 1;   
+                }
+            }
+            if($saved == 0){   
+                $newEmployee = new Employee();
+                $newEmployee->client_id = $employee['cliente'];
+                $newEmployee->name = $employee['nombre'];
+                $newEmployee->employee_number = $employee['legajo']; 
+                $newEmployee->entry_date = Date::excelToDateTimeObject($employee['fecha_de_entrada']);
+                $newEmployee->vacations = $employee['vacaciones_correspondientes'];
+                $newEmployee->scoring = $employee['scoring'];
+                $newEmployee->save();
+            };
+        } 
+        return redirect()->route('legajos');
+    }
+    
 }

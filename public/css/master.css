@@ -21,7 +21,8 @@ a:hover{
 
 
 .title{
-    margin-bottom: 2%;
+    margin-top: -8%;
+    margin-bottom: 7%;
 }
 
 .offset-col-4-and-half{
@@ -41,6 +42,26 @@ a:hover{
     padding: 1% 2%;
 }
 
+/* Elegir Empresa Styles */
+
+.elegir_empresa{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: -2%;
+}
+
+.elegir_empresa p{
+    font-size: 1.3em;
+}
+
+.elegir_empresa form{
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
 /* Header Styles */
 
 .header{
@@ -49,6 +70,8 @@ a:hover{
     display: inline-grid;
     grid-template-columns: 5% 20% auto 20% 5%;
     border-bottom: 3px solid #535B80;
+    position: fixed;
+    background-color: white;
 }
 
 .business-header{
@@ -93,12 +116,17 @@ a:hover{
 .nav{
     grid-column-start: 1;
     grid-column-end: 2;
+    position: fixed;
+    left: 0%;
+    top: 10vh;
+    width: 15%;
 }
 
 .info-container{
     grid-column-start: 2;
     grid-column-end: 3;
     margin: 2%;
+    margin-top: 15vh;
 }
 
 /* Nav Styles */
@@ -143,7 +171,7 @@ a:hover{
 
 .menu_maestros{
     display: grid;
-    grid-template-columns: 10% 10% 10%;
+    grid-template-columns: 10% 10% 10% 50% 20%;
     margin: 3vh 0;
 }
 
@@ -176,6 +204,12 @@ a:hover{
 .maestros_form input, .maestros_form select, .maestros_form_usuarios input, .maestros_form_usuarios select{
     width: 75%;
 }
+
+.importar{
+    grid-column-start: 5;
+    grid-column-end: 6;
+}
+
 
 /* Maestros Usuarios Styles */
 
