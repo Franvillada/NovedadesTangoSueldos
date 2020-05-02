@@ -12,9 +12,11 @@ class NoveltysController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    public function indexNovedades(){
+        $active = ['maestros','novedades'];
+        $novedades = auth()->user()->client->novelty;
+        return view('maestros.novedades')   ->with('active',$active)
+                                            ->with('novedades',$novedades);
     }
 
     /**

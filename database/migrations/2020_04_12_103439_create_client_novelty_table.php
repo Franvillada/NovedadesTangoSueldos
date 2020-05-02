@@ -17,9 +17,8 @@ class CreateClientNoveltyTable extends Migration
             $table->id();
             $table->unsignedBigInteger('novelty_id');
             $table->unsignedBigInteger('client_id');
-            $table->boolean('active')->default(true);
-
-            $table->foreign('novelty_id')->references('id')->on('noveltys');
+            
+            $table->foreign('novelty_id')->references('id')->on('novelties');
             $table->foreign('client_id')->references('id')->on('clients');
             $table->timestamps();
         });

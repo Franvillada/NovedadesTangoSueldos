@@ -75,8 +75,9 @@ a:hover{
     align-items: center;
 }
 
-.user-header p{
-    margin: 0;
+.user-header a{
+    color: black;
+    margin: 0 -20% 0 0;
     font-size: 1.2rem;
     font-weight: 400;
 }
@@ -159,19 +160,53 @@ a:hover{
     width: 14%;
 }
 
-.legajo_form{
+.maestros_form{
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 0.5fr 1fr 1fr 1fr;
     margin: 8% 15% 0 15%;
 }
 
-.legajo_button{
+.accept_cancel_button{
     grid-column-start: 1;
     grid-column-end: 3;
     margin: 0% 0%;
 }
 
-.legajo_form input{
+.maestros_form input, .maestros_form select, .maestros_form_usuarios input, .maestros_form_usuarios select{
     width: 75%;
+}
+
+/* Maestros Usuarios Styles */
+
+.maestros_form_usuarios{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 0.5fr 1fr 1fr;
+    margin: 8% 15% 0 15%;
+}
+
+.reestablecer_contraseña{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: -1.5rem 15% 0 15%;
+}
+
+.reestablecer_contraseña button{
+    width: 75%;
+    padding: 0;
+}
+
+.reestablecer_form{
+    display: flex;
+    height: 60vh;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.reestablecer_form input{
+    
+}.reestablecer_form button{
+    width: 25%;
 }

@@ -15,75 +15,11 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create(Request $request)
-    {
-
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function show(User $user)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(User $user)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, User $user)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(User $user)
-    {
-        //
+    public function indexUsuarios(){
+        $active = ['maestros','usuarios'];
+        $users = auth()->user()->client->user;
+        return view('maestros.usuarios')->with('active',$active)
+                                        ->with('users',$users);
     }
 
     public function login(Request $request){
@@ -99,8 +35,9 @@ class UsersController extends Controller
             ->withInput(request(['email']));
     }
 
-    public function showRegistrationForm(){
-        return view('register');
+    public function showNuevoUsuarioForm(){
+        $active = ['maestros','usuarios'];
+        return view('maestros.register')->with('active',$active);
     }
 
     public function logout(){
@@ -109,7 +46,7 @@ class UsersController extends Controller
         return redirect('/');
     }
 
-    public function register(Request $request){
+    public function registrarUsuario(Request $request){
         $credentials = $this->validate($request,[
             'email' => 'bail|email|required|string|unique:users',
             'username' => 'bail|required|string',
@@ -130,5 +67,52 @@ class UsersController extends Controller
             }
         }
         $newUser->save();
+    }
+
+    public function showEditarUsuarioForm(Request $request){
+        $active = ['maestros','usuarios'];
+        if($request->email){
+            $user = User::where('email', $request->email)->get()->first();
+        }else{
+            $user = auth()->user();
+        }
+        return view('maestros.editarUsuario')->with('user', $user)
+                                            ->with('active',$active);
+    }
+
+    public function editarUsuario(Request $request){
+        $user = User::where('email', $request->old_email)->get()->first();
+        $user->email = $request->email;
+        $user->username = $request->username;
+        $roles = Role::all();
+        foreach ($roles as $role) {
+            if($role->role === $request->role){
+                $user->role_id = $role->id;
+            break;
+            }
+        }
+        $user->save();
+        return redirect()->route('usuarios');
+    }
+
+    public function cambiarEstadoUsuario(Request $request){
+        $user = User::where('email',$request->email)->get()->first();
+        $user->active = !$user->active;
+        $user->save();
+        return redirect()->route('usuarios');
+    }
+
+    public function showReestablecerForm(Request $request){
+        $active = ['maestros','usuarios'];
+        $user = User::where('email', $request->email)->get()->first();
+        return view('maestros.reestablecer')->with('active',$active)
+                                                        ->with('user',$user);
+    }
+
+    public function reestablecerPassword(Request $request){
+        $user = User::where('email',$request->email)->get()->first();
+        $user->password = Hash::make($request->password);
+        $user->save();
+        return redirect()->route('usuarios');
     }
 }

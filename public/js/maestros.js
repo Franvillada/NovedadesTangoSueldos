@@ -26,8 +26,8 @@ if(document.getElementById('menu_maestros')){
             this.style.backgroundColor = 'grey'
             var f1 = document.getElementById('editar_input')
             var f2 = document.getElementById('cambiar_estado_input')
-            f1.value = this.cells[0].innerHTML
-            f2.value = this.cells[0].innerHTML
+            f1.value = this.cells[1].innerHTML
+            f2.value = this.cells[1].innerHTML
         }
         rows[i].onmouseover = function() {
             if (this.parentNode.nodeName == 'THEAD') {

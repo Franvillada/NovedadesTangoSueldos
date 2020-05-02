@@ -6,20 +6,20 @@
         <h6>Editar Legajo</h6>
     </div>
 
-    <form action="{{ route('editar_legajo') }}" method="POST" class="legajo_form">
+    <form action="{{ route('editar_legajo') }}" method="POST" class="maestros_form">
         @csrf
-        <div class="form-group legajo_button">
+        <div class="form-group accept_cancel_button">
             <button class="btn btn-success" type="submit">Aceptar</button>
             <button class="btn btn-danger" type="submit">Cancelar</button>
         </div>
-
+        <input type="hidden" name="old_legajo" value="{{ $empleado->employee_number}} ">
         <div class="form-group legajo_numero">
             <label for="legajo">Numero de Legajo:</label>
             <input  class="form-control" 
                     type="number" 
                     name="legajo" 
                     id="legajo"
-                    value="{{ $empleado->employee_number }}"
+                    value="{{ $errors->has('legajo') ? old('legajo') : $empleado->employee_number }}"
                     placeholder="">
             <div class="{{ $errors->has('legajo') ? 'alert alert-danger' : '' }}">
                 {!! $errors->first('legajo', '<span>:message</span>') !!}

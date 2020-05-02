@@ -7,12 +7,12 @@
     
     <div class="menu_maestros" id="menu_maestros">
         <a href="{{ route('nuevo_legajo') }}" class="btn btn-success" id="nuevo">Nuevo</a>
-        <form action="{{ route('editar_legajo') }}" method="GET" class='editar'>
+        <form action="{{ route('editar_legajo') }}" method="GET">
             @csrf
             <input type="hidden" name="legajo" id="editar_input">
             <button class=" btn btn-success display_none" id="editar" type="submit">Editar</button>
         </form>
-        <form action="{{ route('cambiar_estado_legajo') }}" method="POST" class="inhabilitar">
+        <form action="{{ route('cambiar_estado_legajo') }}" method="POST">
             @csrf
             <input type="hidden" name="legajo" id="cambiar_estado_input">
             <button class=" btn display_none" id="cambiar_estado" type="submit"></button>
@@ -51,5 +51,6 @@
         @endif
         </tbody>
 </table>
+<script type="text/javascript" src="{{ URL::asset('js/maestros.js') }}"></script>
 {{ $empleados->links() }}
 @endsection

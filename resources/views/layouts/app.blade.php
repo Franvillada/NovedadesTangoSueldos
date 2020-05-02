@@ -13,7 +13,7 @@
             <p>{{ auth()->user()->client->business_name }}</p>
         </div>
         <div class="user-header">
-            <p>{{ auth()->user()->username}}</p>
+            <a href="{{ route('editar_usuario') }}">{{ auth()->user()->username}}</a>
             <form action="{{ route('logout') }}" method="post">
                 @csrf
                 <button type="submit" class="btn btn-danger">Cerrar sesión</button>
@@ -24,6 +24,5 @@
     <div class="main-container">
         @yield('content')
     </div>
-    <script type="text/javascript" src="{{ URL::asset('js/master.js') }}"></script>
 </body>
 </html>

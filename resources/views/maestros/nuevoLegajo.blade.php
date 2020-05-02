@@ -6,8 +6,13 @@
         <h6>Nuevo Legajo</h6>
     </div>
 
-    <form action="" method="POST" class="legajo_form">
+    <form action="" method="POST" class="maestros_form">
         @csrf
+        <div class="form-group legajo_button">
+            <button class="btn btn-success" type="submit">Aceptar</button>
+            <button class="btn btn-danger" type="submit">Cancelar</button>
+        </div>
+        
         <div class="form-group legajo_numero">
             <label for="legajo">Numero de Legajo:</label>
             <input  class="form-control" 
@@ -64,9 +69,6 @@
                     id="scoring"
                     value="{{ old('scoring') }}"
                     placeholder="">    
-        </div>
-        <div class="form-group legajo_button">
-            <button class="btn btn-success" type="submit">Añadir Legajo</button>
         </div>
         
     </form>

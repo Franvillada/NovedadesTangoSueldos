@@ -18,24 +18,28 @@ Route::get('/', function () {
 })->name('welcome')->middleware('guest');
 
 Route::post('/login','UsersController@login')->name('login');
-Route::post('/logout','UsersController@logout')->name('logout');
 
-Route::get('/register','UsersController@showRegistrationForm')->middleware('auth');
-Route::post('/register','UsersController@register')->name('register');
+Route::middleware('auth')->group(function(){
+    Route::post('/logout','UsersController@logout')->name('logout');
+    
+    Route::get('/maestros/usuarios','UsersController@indexUsuarios')->name('usuarios');
+    Route::get('/maestros/nuevo_usuario','UsersController@showNuevoUsuarioForm')->name('nuevo_usuario');
+    Route::post('/maestros/nuevo_usuario','UsersController@registrarUsuario')->name('nuevo_usuario');
+    Route::get('maestros/editar_usuario', 'UsersController@showEditarUsuarioForm')->name('editar_usuario');
+    Route::post('maestros/editar_usuario', 'UsersController@editarUsuario')->name('editar_usuario');
+    Route::post('maestros/cambiar_estado_usuario', 'UsersController@cambiarEstadoUsuario')->name('cambiar_estado_usuario');
+    Route::get('maestros/reestablecer', 'UsersController@showReestablecerForm')->name('reestablecer');
+    Route::post('maestros/reestablecer','UsersController@reestablecerPassword')->name('reestablecer');
+    
+    Route::get('/maestros/legajos','EmployeesController@indexLegajos')->name('legajos');
+    Route::get('/maestros/nuevo_legajo','EmployeesController@showNuevoLegajoForm')->name('nuevo_legajo');
+    Route::post('/maestros/nuevo_legajo','EmployeesController@añadirLegajo')->name('nuevo_legajo');
+    Route::get('maestros/editar_legajo', 'EmployeesController@showEditarLegajoForm')->name('editar_legajo');
+    Route::post('maestros/editar_legajo', 'EmployeesController@editarLegajo')->name('editar_legajo');
+    Route::post('maestros/cambiar_estado_legajo', 'EmployeesController@cambiarEstadoLegajo')->name('cambiar_estado_legajo');
+    
+    Route::get('/maestros/novedades','NoveltysController@indexNovedades')->name('novedades');
 
-Route::get('/kpi','AppController@showKpi')->name('kpi')->middleware('auth');
-
-Route::get('/maestros/legajos','AppController@indexLegajos')->name('legajos');
-Route::get('/maestros/nuevo_legajo','AppController@showNuevoLegajoForm')->name('nuevo_legajo');
-Route::post('/maestros/nuevo_legajo','AppController@añadirLegajo')->name('nuevo_legajo');
-Route::get('maestros/editar_legajo', 'AppController@showEditarLegajoForm')->name('editar_legajo');
-Route::post('maestros/editar_legajo', 'AppController@editarLegajo')->name('editar_legajo');
-Route::post('', 'AppController@cambiarEstadoLegajo')->name('cambiar_estado_legajo');
-
-Route::get('/maestros/novedades','AppController@indexNovedades')->name('novedades');
-Route::get('/maestros/usuarios','AppController@indexUsuarios')->name('usuarios');
-Route::get('/maestros/nuevo_usuario','AppController@showNuevousuarioForm')->name('nuevo_usuario');
-Route::post('/maestros/nuevo_usuario','AppController@añadirusuario')->name('nuevo_usuario');
-Route::get('maestros/editar_usuario', 'AppController@showEditarusuarioForm')->name('editar_usuario');
-Route::post('maestros/editar_usuario', 'AppController@editarusuario')->name('editar_usuario');
-Route::post('maestros/inhabilitar_usuario', 'AppController@inhabilitarusuario')->name('inhabilitar_usuario');
+    Route::get('/kpi','AppController@showKpi')->name('kpi')->middleware('auth');
+    
+});
