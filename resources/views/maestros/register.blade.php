@@ -54,6 +54,9 @@
         <select name="role" id="role" class="form-control">
             <option value="admin">Administrador</option>
             <option value="general">Usuario General</option>
+            @if(auth()->user()->role->role == 'superadmin')
+            <option value="superadmin">Sueperadmin</option>
+            @endif
         </select>        
     </div>
     

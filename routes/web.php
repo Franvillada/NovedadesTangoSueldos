@@ -21,12 +21,15 @@ Route::post('/login','UsersController@login')->name('login');
 
 Route::middleware('auth')->group(function(){
 
-    Route::get('/elegir_empresa' , 'AppController@elegirEmpresaForm')->name('elegir_empresa');
-    Route::post('/elegir_empresa', 'AppController@elegirEmpresa')->name('elegir_empresa');
-    Route::get('/backend','BackendController@index')->name('backend');
-
     Route::post('/logout','UsersController@logout')->name('logout');
     
+    Route::get('/elegir_cliente' , 'AppController@elegirClienteForm')->name('elegir_cliente');
+    Route::post('/elegir_cliente', 'AppController@elegirCliente')->name('elegir_cliente');
+
+    Route::get('/backend','BackendController@index')->name('backend');
+    Route::get('/backend/novedades', 'BackendController@novedades')->name('backend_novedades');
+    Route::get('/backend/usuarios', 'BackendController@usuarios')->name('backend_usuarios');
+
     Route::get('/maestros/usuarios','UsersController@indexUsuarios')->name('usuarios');
     Route::get('/maestros/nuevo_usuario','UsersController@showNuevoUsuarioForm')->name('nuevo_usuario');
     Route::post('/maestros/nuevo_usuario','UsersController@registrarUsuario')->name('nuevo_usuario');

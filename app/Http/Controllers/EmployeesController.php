@@ -17,7 +17,11 @@ class EmployeesController extends Controller
      */
     public function indexLegajos(){
         $active = ['maestros','legajos'];
-        $empleados = Employee::where('client_id',auth()->user()->client->id)->paginate(10);
+        if(session()->has('clienteElegido') && auth()->user()->role->role == 'superadmin'){
+            $empleados = Employee::where('client_id',session('clienteElegido')->id)->paginate(10);
+        }else{
+            $empleados = Employee::where('client_id',auth()->user()->client->id)->paginate(10);
+        }
         return view('maestros.legajos') ->with('active',$active)
                                         ->with('empleados',$empleados);
     }
@@ -35,46 +39,59 @@ class EmployeesController extends Controller
             'vacations' => 'integer|required',
             'scoring' => 'integer'
         ]);
-    
         $newLegajo = new Employee();
+        if(session()->has('clienteElegido')){
+            $empleados = session('clienteElegido')->employee;
+            foreach($empleados as $empleado){
+                if($empleado->employee_number == $request->legajo){
+                    return back()
+                    ->withErrors(['legajo' => 'El Legajo ya se encuentra registrado en el sistema'])
+                    ->withInput(request(['legajo']));
+                }
+            }
+            $newLegajo->client_id = session('clienteElegido')->id;
+        }else{
+            $empleados = auth()->user()->client->employee;
+            foreach($empleados as $empleado){
+                if($empleado->employee_number == $request->legajo){
+                    return back()
+                    ->withErrors(['legajo' => 'El Legajo ya se encuentra registrado en el sistema'])
+                    ->withInput(request(['legajo']));
+                }
+            }
+            $newLegajo->client_id = auth()->user()->client->id;
+        }
         $newLegajo->employee_number = $request->legajo;
         $newLegajo->name = $request->name;
         $newLegajo->entry_date = $request->entry_date;
         $newLegajo->vacations = $request->vacations;
         $newLegajo->scoring = $request->scoring;
-        $newLegajo->client_id = auth()->user()->client->id;
         
-        $empleados = auth()->user()->client->employee;
-        foreach($empleados as $empleado){
-            if($empleado->employee_number == $request->legajo){
-                return back()
-                ->withErrors(['legajo' => 'El Legajo ya se encuentra registrado en el sistema'])
-                ->withInput(request(['legajo']));
-            }
-        }
         $newLegajo->save();
         return redirect()->route('legajos');
     }
 
     public function showEditarLegajoForm(Request $request){
         $active = ['maestros','legajos'];
-        $empleado = Employee::where('employee_number', $request->legajo)->where('client_id', auth()->user()->client->id)->get();
-        return view('maestros.editarLegajo')->with('empleado', $empleado->first())
+        
+        $empleado = $this->obtenerEmpleado($request->legajo);
+        return view('maestros.editarLegajo')->with('empleado', $empleado)
         ->with('active',$active);
     }
 
     public function editarLegajo(Request $request){
-        $empleado = Employee::where('employee_number', $request->old_legajo)->where('client_id', auth()->user()->client->id)->get()->first();
+        $empleado = $this->obtenerEmpleado($request->old_legajo);
         if($request->legajo != $request->old_legajo){
-            $empleados = auth()->user()->client->employee;
+            $empleados = $this->obtenerTodosLosEmpleados();
             foreach($empleados as $employee){
-            if($employee->employee_number == $request->legajo){
-                return back()
-                ->withErrors(['legajo' => 'El Legajo ya se encuentra registrado en el sistema'])
-                ->withInput(request(['legajo']));
+                if($employee->employee_number == $request->legajo){
+                    return back()
+                    ->withErrors(['legajo' => 'El Legajo ya se encuentra registrado en el sistema'])
+                    ->withInput(request(['legajo']));
+                }
             }
         }
-        }
+        
         $empleado->employee_number = $request->legajo;
         $empleado->name = $request->name;
         $empleado->entry_date = $request->entry_date;
@@ -86,7 +103,7 @@ class EmployeesController extends Controller
     }
 
     public function cambiarEstadoLegajo(Request $request){
-        $empleado = Employee::where('employee_number', $request->legajo)->where('client_id', auth()->user()->client->id)->get()->first();
+        $empleado = $this->obtenerEmpleado($request->legajo);
         $empleado->active = !$empleado->active;
         $empleado->save();
         return redirect()->route('legajos');
@@ -95,7 +112,12 @@ class EmployeesController extends Controller
     public function importarLegajos(Request $request)
     {
         $newEmployees = Excel::toCollection(new EmployeesImport(), $request->file('file'));
-        $empleados = Employee::where('client_id',auth()->user()->client->id)->get();
+        $empleados = $this->obtenerTodosLosEmpleados();
+        if(session()->has('clienteElegido')){
+            $client_id = session('clienteElegido')->id;
+        }else{
+            $client_id = auth()->user()->client->id;
+        }
         foreach($newEmployees[0] as $employee){
             $saved = 0;
             foreach($empleados as $empleado){
@@ -105,12 +127,13 @@ class EmployeesController extends Controller
                     $empleado->vacations = $employee['vacaciones_correspondientes'];
                     $empleado->scoring = $employee['scoring'];
                     $empleado->save();
-                    $saved = 1;   
+                    $saved = 1;
+                    break;   
                 }
             }
             if($saved == 0){   
                 $newEmployee = new Employee();
-                $newEmployee->client_id = $employee['cliente'];
+                $newEmployee->client_id = $client_id;
                 $newEmployee->name = $employee['nombre'];
                 $newEmployee->employee_number = $employee['legajo']; 
                 $newEmployee->entry_date = Date::excelToDateTimeObject($employee['fecha_de_entrada']);
@@ -120,6 +143,24 @@ class EmployeesController extends Controller
             };
         } 
         return redirect()->route('legajos');
+    }
+
+    public function obtenerEmpleado($legajo){
+        if(session()->has('clienteElegido')){
+            $empleado = Employee::where('employee_number', $legajo)->where('client_id', session('clienteElegido')->id)->get();
+        }else{
+            $empleado = Employee::where('employee_number', $legajo)->where('client_id', auth()->user()->client->id)->get();
+        }
+        return $empleado->first();
+    }
+
+    public function obtenerTodosLosEmpleados(){
+        if(session()->has('clienteElegido')){
+            $empleados = Employee::where('client_id', session('clienteElegido')->id)->get();
+        }else{
+            $empleados = Employee::where('client_id', auth()->user()->client->id)->get();
+        }
+        return $empleados;
     }
     
 }

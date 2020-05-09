@@ -4,7 +4,7 @@
 <div class="elegir_empresa">
     <p><strong>Elegir Empresa:</strong></p>
 
-    <form action="{{ route('elegir_empresa') }}" method="post">
+    <form action="{{ route('elegir_cliente') }}" method="post">
         @csrf
         <div class="form-group">
             <select name="client" id="client" class="form-control">
@@ -17,4 +17,5 @@
         <button type="submit" class="btn btn-success">Entrar</button>
     </form>
 </div>
+<a href="{{ route('backend') }}" class="backend-button btn btn-success">Ir al Administrador</a>
 @endsection

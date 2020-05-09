@@ -22,7 +22,7 @@ class CreateNoveltyregistersTable extends Migration
             $table->boolean('informed')->default(false);
 
             $table->foreign('employee_id')->references('id')->on('employees');
-            $table->foreign('novelty_id')->references('id')->on('noveltys');
+            $table->foreign('novelty_id')->references('id')->on('novelties');
             $table->timestamps();
         });
     }

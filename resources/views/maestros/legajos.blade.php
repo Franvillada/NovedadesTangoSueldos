@@ -39,8 +39,7 @@
             </tr>
         </thead>
         <tbody>
-        @if($empleados!= NULL)
-            @foreach($empleados as $empleado)
+            @forelse($empleados as $empleado)
             <tr>
                 <td>{{ $empleado->employee_number }}</td>
                 <td>{{ $empleado->name }}</td>
@@ -50,12 +49,11 @@
                 <td>{{ $empleado->scoring }}</td>
                 <td>{{ ($empleado->active) ? 'Habilitado' : 'Inhabilitado' }}</td>
             </tr>
-            @endforeach
-        @else
-            <tr>
-                <td>No se cargo ningun legajo al sistema</td>
-            </tr>
-        @endif
+            @empty
+                <tr>
+                    <td colspan="7" class="text-center">No se cargo ningun legajo al sistema</td>
+                </tr>
+            @endforelse
         </tbody>
 </table>
 <script type="text/javascript" src="{{ URL::asset('js/maestros.js') }}"></script>

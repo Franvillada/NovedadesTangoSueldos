@@ -10,7 +10,24 @@
 <body>
     <div class="header">
         <div class="business-header">
+            @if(auth()->user()->role->role == 'superadmin')
+            <form action="{{ route('elegir_cliente') }}" method="post">
+                @csrf
+                <div>
+                    <select name="client" id="client" class="form-control" onchange="form.submit()">
+                        @foreach(session('clientes') as $client)
+                        @if(session()->has('clienteElegido'))
+                        <option value="{{ $client->id }}" <?php echo ($client->id == session('clienteElegido')->id) ? 'selected' : '' ?>>{{ $client->business_name }}</option>
+                        @else
+                        <option value="{{$client->id }}" <?php echo ($client->id == auth()->user()->client->id) ? 'selected' : '' ?>>{{ $client->business_name }}</option>
+                        @endif
+                        @endforeach
+                    </select>
+                </div>
+            </form>
+            @else
             <p>{{ auth()->user()->client->business_name }}</p>
+            @endif
         </div>
         <div class="user-header">
             <a href="{{ route('editar_usuario') }}">{{ auth()->user()->username}}</a>

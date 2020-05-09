@@ -239,8 +239,14 @@ a:hover{
     align-items: center;
 }
 
-.reestablecer_form input{
-    
-}.reestablecer_form button{
+.reestablecer_form button{
     width: 25%;
+}
+
+/* Backend Styles */
+
+.backend-button{
+    position: absolute;
+    top: 5px;
+    right: 5px;
 }

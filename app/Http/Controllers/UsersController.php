@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Role;
+use App\Client;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -17,7 +18,11 @@ class UsersController extends Controller
      */
     public function indexUsuarios(){
         $active = ['maestros','usuarios'];
-        $users = auth()->user()->client->user;
+        if(session()->has('clienteElegido')){
+            $users = session('clienteElegido')->user;
+        }else{
+            $users = auth()->user()->client->user;
+        }
         return view('maestros.usuarios')->with('active',$active)
                                         ->with('users',$users);
     }
@@ -29,8 +34,11 @@ class UsersController extends Controller
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'active' => 1])){
             if(auth()->user()->role->role == 'superadmin'){
-                return redirect()->route('elegir_empresa');
+                $clients = Client::all();
+                session(['clientes' => $clients]);
+                return redirect()->route('elegir_cliente');
             }
+            session()->regenerate();
             return redirect()->route('kpi');
         }
         return back()
@@ -45,7 +53,7 @@ class UsersController extends Controller
 
     public function logout(){
         Auth::logout();
-
+        session()->flush();
         return redirect('/');
     }
 
