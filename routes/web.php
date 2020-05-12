@@ -23,12 +23,23 @@ Route::middleware('auth')->group(function(){
 
     Route::post('/logout','UsersController@logout')->name('logout');
     
-    Route::get('/elegir_cliente' , 'AppController@elegirClienteForm')->name('elegir_cliente');
-    Route::post('/elegir_cliente', 'AppController@elegirCliente')->name('elegir_cliente');
+    Route::middleware('superadmin')->group(function(){
+        Route::get('/elegir_cliente' , 'AppController@elegirClienteForm')->name('elegir_cliente');
+        Route::post('/elegir_cliente', 'AppController@elegirCliente')->name('elegir_cliente');
 
-    Route::get('/backend','BackendController@index')->name('backend');
-    Route::get('/backend/novedades', 'BackendController@novedades')->name('backend_novedades');
-    Route::get('/backend/usuarios', 'BackendController@usuarios')->name('backend_usuarios');
+        Route::get('/backend','BackendController@index')->name('backend');
+
+        Route::get('/backend/clientes', 'BackendController@indexClientes')->name('backend_clientes');
+        Route::get('/backend/nuevo_cliente','BackendController@showNuevoClienteForm')->name('nuevo_cliente');
+        Route::post('/backend/nuevo_cliente','BackendController@añadirCliente')->name('nuevo_cliente');
+        Route::get('/backend/editar_cliente', 'BackendController@showEditarClienteForm')->name('editar_cliente');
+        Route::post('/backend/editar_cliente', 'BackendController@editarCliente')->name('editar_cliente');
+        Route::post('/backend/cambiar_estado_cliente','BackendController@cambiarEstadoCliente')->name('cambiar_estado_cliente');
+
+        Route::get('/backend/novedades', 'BackendController@novedades')->name('backend_novedades');
+        Route::get('/backend/usuarios', 'BackendController@usuarios')->name('backend_usuarios');
+    });
+    
 
     Route::get('/maestros/usuarios','UsersController@indexUsuarios')->name('usuarios');
     Route::get('/maestros/nuevo_usuario','UsersController@showNuevoUsuarioForm')->name('nuevo_usuario');
