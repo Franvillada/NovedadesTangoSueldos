@@ -20,6 +20,7 @@ class AppController extends Controller
         $client = Client::find($request->client);
         session(['clienteElegido' => $client]);
         if($client->business_name == 'Estudio MR y Asociados'){
+            $request->session()->forget('clienteElegido');
             return redirect()->route('backend');
         }else{
             return view('kpi')  ->with('active','kpi')

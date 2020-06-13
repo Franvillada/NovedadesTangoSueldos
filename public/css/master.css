@@ -1,12 +1,18 @@
 
 html,body{
-    margin:0;  
+    margin:0;
+    font-family: adobe-gothic-std, sans-serif;  
 }
 
 a:hover{
     text-decoration: none;
 }
 
+.boton_principal{
+    font-weight: bolder;
+    color: white;
+    background-color: #016666;
+}
 /* Welcome Page Styles */
 
 
@@ -16,7 +22,7 @@ a:hover{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background-color: #E6EEF2;
+    background-color: white;
 }
 
 
@@ -25,16 +31,21 @@ a:hover{
     margin-bottom: 7%;
 }
 
+.title p{
+    font-size: 1.9rem;
+    font-weight: 400!important;
+}
+
 .offset-col-4-and-half{
     margin-left: 37.5%;
 }
 
-.login-form label{
-    font-weight: bold;
+.login-form{
+    margin-top: -5%;
 }
 
-.login-form button{
-    font-weight: bolder;
+.login-form label{
+    font-weight: bold;
 }
 
 .form-group div{
@@ -68,41 +79,50 @@ a:hover{
     height: 10vh;
     width: 100vw;
     display: inline-grid;
-    grid-template-columns: 5% 20% auto 20% 5%;
-    border-bottom: 3px solid #535B80;
+    grid-template-columns: 15% auto 20%;
+    border-bottom: 1.5px solid lightgray;
     position: fixed;
     background-color: white;
 }
 
 .business-header{
-    grid-column-start: 2;
-    grid-column-end: 3;
+    grid-column-start: 1;
+    grid-column-end: 2;
     display: flex;
-    flex-direction: row;
-    justify-content: left;
+    justify-content: center;
     align-items: center;
+    width: 100%;
+}
+
+.business-header form{
+    width: 85%;
+}
+
+.business-header select{
+    font-size: 0.9rem;
 }
 
 .business-header p{
     margin: 0;
-    font-size: 1.5rem;
+    font-size: 1.1rem;
     font-weight: 500;
 }
 
 .user-header{
-    grid-column-start: 4;
-    grid-column-end: 5;
+    grid-column-start: 3;
+    grid-column-end: 4;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
     align-items: center;
+    justify-content: flex-end;
+    margin-right: 30px;
 }
 
 .user-header a{
     color: black;
-    margin: 0 -20% 0 0;
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: 400;
+    margin-right: 15px;
 }
 
 /* Basic Grid Structre */
@@ -135,32 +155,35 @@ a:hover{
     display: flex;
     flex-direction: column;
     height: 90vh;
-    border-right: 3px solid #535B80;
+    border-right: 1.5px solid lightgray;
 }
 
 .nav-item{
-    height: 10%;
+    height: 7%;
     display: flex;
-    justify-content: center;
+    justify-content: left;
     align-items: center;
-    border-bottom: 1px solid lightgrey;
     color: #353535;
+    padding-left: 15px;
+
+}
+
+.nav-item:hover , .nav-item-child:hover{
+    background-color: lightgray;
+    color: initial;
 }
 
 .nav-item-child{
     height: 7%;
     display: flex;
     align-items: center;
-    margin-left: 50%;
+    padding-left: 25%;
     color: #353535;
-}
-
-.nav-item:last-child{
-    border-top: 1px solid lightgrey;
+    font-size: 0.9rem;
 }
 
 .active{
-    background-color: #B8C9D9;
+    font-weight: bold;
 }
 
 .active-child{
@@ -170,14 +193,14 @@ a:hover{
 /* Maestros - Legajos Styles */
 
 .menu_maestros{
-    display: grid;
-    grid-template-columns: 10% 10% 10% 50% 20%;
+    display: flex;
+    flex-direction: row;
     margin: 3vh 0;
+    font-size: 1rem;
 }
 
-.menu_maestros .btn{
-    width: 75%;
-    border: 1px solid lightgray;
+.btn{
+    margin-right: 16px;
 }
 
 .display_none{
@@ -195,7 +218,8 @@ a:hover{
     margin: 8% 15% 0 15%;
 }
 
-.accept_cancel_button{
+.accept_cancel_button,
+.añadir_novedad_group{
     grid-column-start: 1;
     grid-column-end: 3;
     margin: 0% 0%;
@@ -204,12 +228,6 @@ a:hover{
 .maestros_form input, .maestros_form select, .maestros_form_usuarios input, .maestros_form_usuarios select{
     width: 75%;
 }
-
-.importar{
-    grid-column-start: 5;
-    grid-column-end: 6;
-}
-
 
 /* Maestros Usuarios Styles */
 
@@ -243,10 +261,18 @@ a:hover{
     width: 25%;
 }
 
+/* Añadir Novedades Styles*/
+
+.maestros_form_novedades{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    margin: 8% 20% 0 20%;
+}
 /* Backend Styles */
 
 .backend-button{
     position: absolute;
-    top: 5px;
-    right: 5px;
+    top: 15px;
+    right: 15px;
 }

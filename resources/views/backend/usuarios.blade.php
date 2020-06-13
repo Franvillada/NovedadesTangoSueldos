@@ -1,4 +1,4 @@
-@extends('layouts.nav')
+@extends('backend.index')
 
 @section('sub-content')
 <div>
@@ -6,8 +6,8 @@
     </div>
     
     <div class="menu_maestros" id="menu_maestros">
-        <a href="{{ route('nuevo_usuario') }}" class="btn boton_principal" id="nuevo">Nuevo</a>
-        <form action="{{ route('editar_usuario') }}" method="GET">
+        <a href="{{ route('nuevo_superadmin') }}" class="btn boton_principal" id="nuevo">Nuevo</a>
+        <form action="{{ route('editar_superadmin') }}" method="GET">
             @csrf
             <input type="hidden" name="email" id="editar_input">
             <button class=" btn boton_principal display_none" id="editar" type="submit">Editar</button>
@@ -24,7 +24,6 @@
             <tr>
             <th scope="col">Email</th>
             <th scope="col">Nombre de Usuario</th>
-            <th scope="col">Rol</th>
             <th scope="col">Estado</th>
             </tr>
         </thead>
@@ -33,12 +32,11 @@
         <tr>
             <td>{{ $user->email }}</td>
             <td>{{ $user->username }}</td>
-            <td>{{ $user->role->role }}</td>
             <td>{{ ($user->active) ? 'Habilitado' : 'Inhabilitado' }}</td>
         </tr>
         @empty
             <tr>
-                <td colspan="4" class="text-center">No se cargo ningun usuario al sistema</td>
+                <td>No se cargo ningun usuario al sistema</td>
             </tr>
         @endforelse
         </tbody>

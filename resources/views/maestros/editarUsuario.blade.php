@@ -2,8 +2,7 @@
 
 @section('sub-content')
 <div>
-    <h3>Maestros - Usuarios</h3>
-    <h6>Editar Usuario</h6>
+    <h3>Editar Usuario</h3>
 </div>
 
 <form action="{{ route('editar_usuario') }}" method="POST" class="maestros_form_usuarios">
@@ -45,8 +44,7 @@
                 type="password" 
                 name="password" 
                 id="password"
-                value="***********" 
-                placeholder="Contraseña" disabled>
+                value="***********" disabled>
         <div class="{{ $errors->has('email') ? 'alert alert-danger' : '' }}">
             {!! $errors->first('password', '<span>:message</span>') !!}
         </div>
@@ -59,7 +57,7 @@
         </select>        
     </div>
 </form>
-@if(auth()->user()->role->role == 'admin')
+@if(auth()->user()->role->role == 'superadmin')
     <form action="{{ route('reestablecer') }}" method="GET" class="reestablecer_contraseña">
         @csrf
         <input type="hidden" name="email" value="{{ $user->email }}">

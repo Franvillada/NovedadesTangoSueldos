@@ -18,13 +18,8 @@ class UsersController extends Controller
      */
     public function indexUsuarios(){
         $active = ['maestros','usuarios'];
-        if(session()->has('clienteElegido')){
-            $users = session('clienteElegido')->user;
-        }else{
-            $users = auth()->user()->client->user;
-        }
         return view('maestros.usuarios')->with('active',$active)
-                                        ->with('users',$users);
+                                        ->with('users',$this->obtenerTodosLosUsuarios());
     }
 
     public function login(Request $request){
@@ -33,12 +28,13 @@ class UsersController extends Controller
         ]);
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'active' => 1])){
+            session()->regenerate();
             if(auth()->user()->role->role == 'superadmin'){
                 $clients = Client::all();
                 session(['clientes' => $clients]);
                 return redirect()->route('elegir_cliente');
             }
-            session()->regenerate();
+            
             return redirect()->route('kpi');
         }
         return back()
@@ -69,7 +65,11 @@ class UsersController extends Controller
         $newUser->email = $request->email;
         $newUser->username = $request->username;
         $newUser->password = Hash::make($request->password);
-        $newUser->client_id = 1;
+        if(session()->has('clienteElegido')){
+            $newUser->client_id = session('clienteElegido')->id;
+        }else{
+            $newUser->client_id = auth()->user()->client->id;
+        }
         $roles = Role::all();
         foreach ($roles as $role) {
             if($role->role === $request->role){
@@ -126,5 +126,14 @@ class UsersController extends Controller
         $user->password = Hash::make($request->password);
         $user->save();
         return redirect()->route('usuarios');
+    }
+
+    public function obtenerTodosLosUsuarios(){
+        if(session()->has('clienteElegido')){
+            $users = User::where('client_id',session('clienteElegido')->id)->get();
+        }else{
+            $users = auth()->user()->client->user;
+        }
+        return $users;
     }
 }

@@ -2,28 +2,29 @@
 
 @section('sub-content')
     <div>
-        <h3>Maestros - Legajos</h3>
+        <h3>Legajos</h3>
     </div>
     
     <div class="menu_maestros" id="menu_maestros">
-        <a href="{{ route('nuevo_legajo') }}" class="btn btn-success" id="nuevo">Nuevo</a>
+        <a href="{{ route('nuevo_legajo') }}" class="btn boton_principal" id="nuevo">Nuevo</a>
+        <form action="{{ route('importar_legajos') }}" method="post" class="importar" enctype="multipart/form-data">
+            @csrf
+            <label for="file" class="btn boton_principal mb-0">
+                Importar
+            </label>
+            <input id="file" name="file" type="file" class="d-none" onchange="form.submit()"/>
+        </form>
         <form action="{{ route('editar_legajo') }}" method="GET">
             @csrf
             <input type="hidden" name="legajo" id="editar_input">
-            <button class=" btn btn-success display_none" id="editar" type="submit">Editar</button>
+            <button class=" btn boton_principal display_none" id="editar" type="submit">Editar</button>
         </form>
         <form action="{{ route('cambiar_estado_legajo') }}" method="POST">
             @csrf
             <input type="hidden" name="legajo" id="cambiar_estado_input">
-            <button class=" btn display_none" id="cambiar_estado" type="submit"></button>
+            <button class=" btn display_none font-weight-bold" id="cambiar_estado" type="submit"></button>
         </form>
-        <form action="{{ route('importar_legajos') }}" method="post" class="importar" enctype="multipart/form-data">
-            @csrf
-            <label for="file" class="btn btn-success custom-file">
-                Importar desde Excel
-            </label>
-            <input id="file" name="file" type="file" class="d-none" onchange="form.submit()"/>
-        </form>
+        
     </div>
 
     <table class="table" id="table">

@@ -2,8 +2,7 @@
 
 @section('sub-content')
     <div>
-        <h3>Maestros - Legajos</h3>
-        <h6>Editar Legajo</h6>
+        <h3>Editar Legajo</h3>
     </div>
 
     <form action="{{ route('editar_legajo') }}" method="POST" class="maestros_form">

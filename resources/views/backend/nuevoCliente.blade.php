@@ -2,8 +2,7 @@
 
 @section('sub-content')
     <div>
-        <h3>Clientes</h3>
-        <h6>Nuevo Cliente</h6>
+        <h3>Nuevo Cliente</h3>
     </div>
 
     <div class="elegir_empresa mt-5">
@@ -23,7 +22,7 @@
                 </div>
             </div>
             
-            <button type="submit" class="btn btn-success">Crear Cliente</button>
+            <button type="submit" class="btn boton_principal">Crear Cliente</button>
         </form>
     </div>
 

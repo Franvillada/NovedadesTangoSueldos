@@ -2,8 +2,7 @@
 
 @section('sub-content')
 <div>
-    <h3>Maestros - Usuarios</h3>
-    <h6>Nuevo Usuario</h6>
+    <h3>Nuevo Usuario</h3>
 </div>
 
 <form action="" method="POST" class="maestros_form">
@@ -45,7 +44,7 @@
                 name="password" 
                 id="password" 
                 placeholder="Contraseña">
-        <div class="{{ $errors->has('email') ? 'alert alert-danger' : '' }}">
+        <div class="{{ $errors->has('password') ? 'alert alert-danger' : '' }}">
             {!! $errors->first('password', '<span>:message</span>') !!}
         </div>
     </div>
@@ -54,9 +53,6 @@
         <select name="role" id="role" class="form-control">
             <option value="admin">Administrador</option>
             <option value="general">Usuario General</option>
-            @if(auth()->user()->role->role == 'superadmin')
-            <option value="superadmin">Sueperadmin</option>
-            @endif
         </select>        
     </div>
     

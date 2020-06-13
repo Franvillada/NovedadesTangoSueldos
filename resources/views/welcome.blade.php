@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="row login-form">
+<div class="login-form">
     <div class="col-3 offset-col-4-and-half">
         <form action="{{ route('login') }}" method="POST">
             @csrf
@@ -30,7 +30,7 @@
                     {!! $errors->first('password', '<span>:message</span>') !!}
                 </div>
             </div>
-            <button class="btn btn-primary btn-block" type="submit">INGRESAR</button>
+            <button class="btn boton_principal btn-block" type="submit">INGRESAR</button>
         </form>
     </div>
     

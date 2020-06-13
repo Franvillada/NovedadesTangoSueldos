@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class NoveltyRegister extends Model
 {
-    public function file(){
-        return $this->belognsTo('App\File');
+    public function employee(){
+        return $this->belongsTo('App\Employee');
     }
 }

@@ -13,7 +13,7 @@ class CreateNoveltyregistersTable extends Migration
      */
     public function up()
     {
-        Schema::create('noveltyregisters', function (Blueprint $table) {
+        Schema::create('novelty_registers', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('employee_id');
             $table->double('quantity',4,2);
@@ -34,6 +34,6 @@ class CreateNoveltyregistersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('noveltyregisters');
+        Schema::dropIfExists('novelty_registers');
     }
 }

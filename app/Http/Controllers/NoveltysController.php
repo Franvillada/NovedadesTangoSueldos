@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Novelty;
+use App\Client;
 use Illuminate\Http\Request;
 
 class NoveltysController extends Controller
@@ -14,74 +15,58 @@ class NoveltysController extends Controller
      */
     public function indexNovedades(){
         $active = ['maestros','novedades'];
+        $novedades = $this->obtenerNovedadesEnUso();
         $novedades = auth()->user()->client->novelty;
         return view('maestros.novedades')   ->with('active',$active)
                                             ->with('novedades',$novedades);
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    
+    public function showAñadirRelacionForm(){
+        $active = ['maestros','novedades'];
+        $novedades = Novelty::all();
+        $novedades_disponibles = $novedades->reject(function($value){
+            $novedades_en_uso = $this->obtenerNovedadesEnUso();
+            return $novedades_en_uso->contains($value);
+        });
+        return view('maestros.añadirNovedad')   ->with('active',$active)
+                                                ->with('novedades_disponibles',$novedades_disponibles);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+    public function añadirRelacion(Request $request){
+        if(session()->has('clienteElegido')){
+            $client = session('clienteElegido');
+        }else{
+            $client = auth()->user()->client;
+        }
+        foreach($request->novedades as $novedad){
+            $client->novelty()->attach(Novelty::where('code',$novedad)->get()->first()->id);
+        }
+
+        $updatedClient = Client::where('business_name',$client->business_name)->get()->first();
+        session(['clienteElegido' => $updatedClient]);
+        return redirect()->route('novedades');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Novelty  $novelty
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Novelty $novelty)
-    {
-        //
+    public function eliminarRelacion(Request $request){
+        if(session()->has('clienteElegido')){
+            $client = session('clienteElegido');
+        }else{
+            $client = auth()->user()->client;
+        }
+        $client->novelty()->detach(Novelty::where('code',$request->code)->get()->first()->id);
+
+        $updatedClient = Client::where('business_name',$client->business_name)->get()->first();
+        session(['clienteElegido' => $updatedClient]);
+        return redirect()->route('novedades');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Novelty  $novelty
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Novelty $novelty)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Novelty  $novelty
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Novelty $novelty)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Novelty  $novelty
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Novelty $novelty)
-    {
-        //
+    public function obtenerNovedadesEnUso(){
+        if(session()->has('clienteElegido')){
+            $novedades = session('clienteElegido')->novelty;
+        }else{
+            $novedades = auth()->user()->client->novelty;
+        }
+        
+        return $novedades;
     }
 }

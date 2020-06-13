@@ -2,8 +2,7 @@
 
 @section('sub-content')
     <div>
-        <h3>Maestros - Legajos</h3>
-        <h6>Nuevo Legajo</h6>
+        <h3>Nuevo Legajo</h3>
     </div>
 
     <form action="" method="POST" class="maestros_form">

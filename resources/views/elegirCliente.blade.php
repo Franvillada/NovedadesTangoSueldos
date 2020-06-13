@@ -14,8 +14,8 @@
             </select>
         </div>
         
-        <button type="submit" class="btn btn-success">Entrar</button>
+        <button type="submit" class="btn boton_principal">Entrar</button>
     </form>
 </div>
-<a href="{{ route('backend') }}" class="backend-button btn btn-success">Ir al Administrador</a>
+<a href="{{ route('backend') }}" class="backend-button btn boton_principal">Administrador</a>
 @endsection
