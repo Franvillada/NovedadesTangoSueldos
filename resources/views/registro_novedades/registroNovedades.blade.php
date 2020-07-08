@@ -22,6 +22,11 @@
             <input type="hidden" name="registro_id" id="eliminar_input">
             <button class="btn display_none btn-danger font-weight-bold" id="eliminar" type="submit">Eliminar</button>
         </form>
+        <form action="" method="GET">
+            @csrf
+            <input type="hidden" name="registro_id" id="editar_input">
+            <button class="btn boton_principal display_none" id="editar" type="submit">Editar</button>
+        </form>
     </div>
 
     <table class="table" id="table">

@@ -16,7 +16,6 @@ class NoveltysController extends Controller
     public function indexNovedades(){
         $active = ['maestros','novedades'];
         $novedades = $this->obtenerNovedadesEnUso();
-        $novedades = auth()->user()->client->novelty;
         return view('maestros.novedades')   ->with('active',$active)
                                             ->with('novedades',$novedades);
     }
@@ -62,6 +61,7 @@ class NoveltysController extends Controller
 
     public function obtenerNovedadesEnUso(){
         if(session()->has('clienteElegido')){
+            
             $novedades = session('clienteElegido')->novelty;
         }else{
             $novedades = auth()->user()->client->novelty;
