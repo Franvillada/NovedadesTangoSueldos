@@ -6,6 +6,9 @@ use App\NoveltyRegister;
 use App\Employee;
 use DB;
 use Illuminate\Http\Request;
+use App\Exports\NoveltyRegistersExport;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Storage;
 
 class NoveltyRegistersController extends Controller
 {
@@ -98,5 +101,46 @@ class NoveltyRegistersController extends Controller
             $empleados = Employee::where('client_id', auth()->user()->client->id)->get();
         }
         return $empleados;
+    }
+
+    public function showExportarForm(){
+        return view('registro_novedades/exportarRegistros')
+                    ->with('active','novedades');
+    }
+
+    public function storeExcel(Request $request){
+        if(session()->has('clienteElegido')){
+            $client_id = session('clienteElegido')->id;
+        }else{
+            $client_id = auth()->user()->client->id;
+        }
+        if(Excel::store(new NoveltyRegistersExport($request->año,$request->mes,$client_id),'registro_novedades.xlsx')){
+            return $this->informarRegistros($request->año,$request->mes,$client_id);
+        }else{
+            return 'No se pudo exportar el archivo';
+        }
+        
+    }
+
+    public function informarRegistros($año,$mes,$client_id){
+        $registros = DB::table('novelty_registers')
+                        ->join('employees','novelty_registers.employee_id','=','employees.id')
+                        ->join('novelties','novelty_registers.novelty_id','=','novelties.id')
+                        ->where('employees.client_id','=',$client_id)
+                        ->whereYear('novelty_registers.date',$año)
+                        ->whereMonth('novelty_registers.date',$mes)
+                        ->select('novelty_registers.id','novelty_registers.quantity','novelty_registers.date','novelty_registers.informed','employees.employee_number','employees.name','novelties.code','novelties.description')
+                        ->get();
+        foreach ($registros as $registro) {
+            $registro_editado = NoveltyRegister::where('id',$registro->id)->first(); 
+            $registro_editado->informed = 1;
+            $registro_editado->save();
+        }
+        session()->flash('download.in.the.next.request','registro_novedades.xlsx');
+        return redirect()->route('registro_novedades');
+    }
+    
+    public function downloadExcel(){
+        return Storage::download('registro_novedades.xlsx');
     }
 }

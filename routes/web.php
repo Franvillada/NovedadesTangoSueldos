@@ -81,7 +81,10 @@ Route::middleware('auth')->group(function(){
     Route::post('registro-novedades/editar','NoveltyRegistersController@editarRegistro')->name('editar_registro');
     Route::post('registro-novedades/informar','NoveltyRegistersController@cambiarEstadoRegistro')->name('cambiar_estado_registro');
     Route::post('registro-novedades/eliminar','NoveltyRegistersController@eliminarRegistro')->name('eliminar_registro');
-    
+    Route::get('registro-novedades/exportar','NoveltyRegistersController@showExportarForm')->name('exportar_registros');
+    Route::post('registro-novedades/exportar','NoveltyRegistersController@storeExcel')->name('exportar_registros');
+    Route::get('registro-novedades/download','NoveltyRegistersController@downloadExcel');
+
     Route::get('/kpi','AppController@showKpi')->name('kpi')->middleware('auth');
     
 });

@@ -276,3 +276,42 @@ a:hover{
     top: 15px;
     right: 15px;
 }
+
+/* Registro Novedades Styles */
+
+.exportar_form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10%;
+}
+
+.exportar_form div{
+    width: 30%;
+    margin: 2.5vh 0;
+}
+
+.exportar_form button{
+    width: 25%;
+    margin: 2.5vh 0;
+}
+
+/* Kpi's Styles */
+
+.tablero_kpi{
+    margin: 10vh 15vw;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+}
+
+.tarjeta_kpi{
+    height: 25vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid grey;
+    margin: 2%;
+}

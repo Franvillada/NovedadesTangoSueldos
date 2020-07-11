@@ -7,6 +7,7 @@
     
     <div class="menu_maestros" id="menu_maestros">
         <a href="{{ route('nuevo_registro') }}" class="btn boton_principal" id="nuevo">Nuevo</a>
+        <a href="{{ route('exportar_registros') }}" class="btn boton_principal" id="exportar">Exportar</a>
         <form action="{{ route('editar_registro') }}" method="GET">
             @csrf
             <input type="hidden" name="registro_id" id="editar_input">
@@ -22,11 +23,7 @@
             <input type="hidden" name="registro_id" id="eliminar_input">
             <button class="btn display_none btn-danger font-weight-bold" id="eliminar" type="submit">Eliminar</button>
         </form>
-        <form action="" method="GET">
-            @csrf
-            <input type="hidden" name="registro_id" id="editar_input">
-            <button class="btn boton_principal display_none" id="editar" type="submit">Editar</button>
-        </form>
+        
     </div>
 
     <table class="table" id="table">

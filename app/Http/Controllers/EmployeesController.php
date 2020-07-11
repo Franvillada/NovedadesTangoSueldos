@@ -95,6 +95,7 @@ class EmployeesController extends Controller
         $empleado->employee_number = $request->legajo;
         $empleado->name = $request->name;
         $empleado->entry_date = $request->entry_date;
+        $empleado->leave_date = $request->leave_date;
         $empleado->vacations = $request->vacations;
         $empleado->scoring = $request->scoring;
        
