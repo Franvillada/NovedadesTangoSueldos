@@ -214,4 +214,30 @@ class BackendController extends Controller
         return view('backend.editarSuperadmin')->with('user',User::where('email',$request->email)->get()->first());
     }
 
+    public function editarSuperadmin(Request $request){
+        $credentials = $this->validate($request,[
+            'email' => 'bail|email|required|string',
+            'username' => 'bail|required|string',
+            'role' => 'required'
+        ]);
+        $superadmin = User::where('email', $request->old_email)->get()->first();
+        
+        $superadmin->email = $request->email;
+        $superadmin->username = $request->username;
+        
+        $superadmin->save();
+        return redirect()->route('backend_usuarios');
+    }
+
+    public function showReestablecerForm(Request $request){
+        $superadmin = User::where('email', $request->email)->get()->first();
+        return view('backend.reestablecer')->with('user',$superadmin);
+    }
+
+    public function reestablecerPassword(Request $request){
+        $superadmin = User::where('email',$request->email)->get()->first();
+        $superadmin->password = Hash::make($request->password);
+        $superadmin->save();
+        return redirect()->route('backend_usuarios');
+    }
 }

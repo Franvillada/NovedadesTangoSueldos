@@ -22,7 +22,8 @@
                 {!! $errors->first('username', '<span>:message</span>') !!}
             </div>
         </div>
-
+        
+        <input type="hidden" name="old_email" value="{{ $user->email }} ">
         <div class="form-group">
             <label for="email">Email:</label>
             <input  class="form-control" 
@@ -53,15 +54,17 @@
                 <option value="superadmin" selected>Superadmin</option>
             </select>
         </div>
-        @if(auth()->user()->role->role == 'superadmin')
-            <form action="{{ route('reestablecer') }}" method="GET" class="reestablecer_contraseña">
-                @csrf
-                <input type="hidden" name="email" value="{{ $user->email }}">
-                <button class=" btn btn-danger" id="editar" type="submit"><?php echo ($user->email == auth()->user()->email) ? 'Cambiar Contraseña' : 'Reestablecer Contraseña' ?> </button>
-            </form>
-        @endif
-                
     </form>
+
+    @if(auth()->user()->role->role == 'superadmin')
+        <form action="{{ route('reestablecer_superadmin') }}" method="GET" class="reestablecer_contraseña">
+            @csrf
+            <input type="hidden" name="email" value="{{ $user->email }}">
+            <button class=" btn btn-danger" id="editar" type="submit"><?php echo ($user->email == auth()->user()->email) ? 'Cambiar Contraseña' : 'Reestablecer Contraseña' ?> </button>
+        </form>
+    @endif
+                
+    
 
 
 @endsection

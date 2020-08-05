@@ -49,6 +49,8 @@ Route::middleware('auth')->group(function(){
         Route::post('/backend/nuevo_superadmin','BackendController@superadmin')->name('nuevo_superadmin');
         Route::get('/backend/editar_superadmin','BackendController@showEditarSuperadminForm')->name('editar_superadmin');
         Route::post('/backend/editar_superadmin','BackendController@editarSuperadmin')->name('editar_superadmin');
+        Route::get('backend/reestablecer', 'BackendController@showReestablecerForm')->name('reestablecer_superadmin');
+        Route::post('backend/reestablecer','BackendController@reestablecerPassword')->name('reestablecer_superadmin');
     });
     
 
