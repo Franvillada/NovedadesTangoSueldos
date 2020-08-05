@@ -27,7 +27,7 @@ class NoveltysController extends Controller
             $novedades_en_uso = $this->obtenerNovedadesEnUso();
             return $novedades_en_uso->contains($value);
         });
-        return view('maestros.añadirNovedad')   ->with('active',$active)
+        return view('maestros.nuevaNovedad')   ->with('active',$active)
                                                 ->with('novedades_disponibles',$novedades_disponibles);
     }
 

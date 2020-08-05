@@ -10,8 +10,11 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Events\AfterSheet;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
+use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 
-class NoveltyRegistersExport implements FromQuery, WithHeadings, ShouldAutoSize,WithEvents
+class NoveltyRegistersExport implements FromQuery, WithHeadings, WithColumnFormatting, WithMapping, ShouldAutoSize,WithEvents
 {
     
     use Exportable;
@@ -30,6 +33,23 @@ class NoveltyRegistersExport implements FromQuery, WithHeadings, ShouldAutoSize,
             'Fecha',
             'Cantidad',
             'Valor'
+        ];
+    }
+
+    public function map($registro):array
+    {
+        return[
+            $registro->employee_number,
+            $registro->code,
+            Date::dateTimeToExcel($registro->date),
+            $registro->quantity,
+        ];
+    }
+
+    public function columnFormats():array
+    {
+        return[
+            'C' => NumberFormat::FORMAT_DATE_DDMMYYYY,
         ];
     }
 

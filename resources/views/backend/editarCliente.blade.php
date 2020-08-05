@@ -26,7 +26,7 @@
             
             <div class="form-group accept_cancel_button">
                 <button class="btn btn-success" type="submit">Aceptar</button>
-                <button class="btn btn-danger" type="submit">Cancelar</button>
+                <a href="{{ url()->previous() }}" class="btn btn-danger">Cancelar</a>
             </div>
             
         </form>

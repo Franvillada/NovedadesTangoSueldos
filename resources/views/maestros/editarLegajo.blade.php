@@ -9,10 +9,10 @@
         @csrf
         <div class="form-group accept_cancel_button">
             <button class="btn btn-success" type="submit">Aceptar</button>
-            <button class="btn btn-danger" type="submit">Cancelar</button>
+            <a href="{{ url()->previous() }}" class="btn btn-danger">Cancelar</a>
         </div>
         <input type="hidden" name="old_legajo" value="{{ $empleado->employee_number}} ">
-        <div class="form-group legajo_numero">
+        <div class="form-group">
             <label for="legajo">Numero de Legajo:</label>
             <input  class="form-control" 
                     type="number" 
@@ -25,7 +25,7 @@
             </div>
         </div>
 
-        <div class="form-group legajo_nombre">
+        <div class="form-group">
             <label for="name">Nombre y Apellido</label>
             <input  class="form-control" 
                     type="text" 
@@ -38,7 +38,7 @@
             </div>
         </div>
         
-        <div class="form-group legajo_fecha">
+        <div class="form-group">
             <label for="entry_date">Dia de Ingreso:</label>
             <input  class="form-control" 
                     type="date" 
@@ -51,7 +51,7 @@
             </div>
         </div>
 
-        <div class="form-group legajo_fecha">
+        <div class="form-group">
             <label for="leave_date">Dia de Egreso:</label>
             <input  class="form-control" 
                     type="date" 
@@ -64,7 +64,7 @@
             </div>
         </div>
 
-        <div class="form-group legajo_vacaciones">
+        <div class="form-group">
             <label for="vacations">Vacaciones correspondientes:</label>
             <input  class="form-control" 
                     type="number" 
@@ -74,7 +74,17 @@
                     placeholder="">    
         </div>
 
-        <div class="form-group legajo_scoring">
+        <div class="form-group">
+            <label for="vacations">Vacaciones Gozadas:</label>
+            <p class="form-control">{{ $vacacionesGozadas }}</p>    
+        </div>
+
+        <div class="form-group">
+            <label for="vacations">Saldo de Vacaciones:</label>
+            <p class="form-control">{{ $empleado->vacations - $vacacionesGozadas }}</p>    
+        </div>
+
+        <div class="form-group">
             <label for="scoring">Scoring</label>
             <input  class="form-control" 
                     type="number" 
@@ -83,6 +93,7 @@
                     value="{{ $empleado->scoring }}"
                     placeholder="">    
         </div>
+        
         
     </form>
 @endsection

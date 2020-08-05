@@ -9,7 +9,7 @@
     @csrf
     <div class="form-group accept_cancel_button">
         <button class="btn btn-success" type="submit">Aceptar</button>
-        <button class="btn btn-danger" type="submit">Cancelar</button>
+        <a href="{{ url()->previous() }}" class="btn btn-danger">Cancelar</a>
     </div>
     <input type="hidden" name="old_code" value="{{ $novedad->code}} ">
     <div class="form-group">
@@ -47,7 +47,28 @@
             {!! $errors->first('unit', '<span>:message</span>') !!}
         </div>
     </div>
-    
+
+    <div class="form-group">
+        <p>Categoria:</p>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="ausentismo" value="absence" <?php echo ($novedad->absence == 1) ? 'checked' : ''?>>
+            <label class="form-check-label" for="ausentismo">
+                Ausentismo
+            </label>
+        </div>
+        <div class="form-check">   
+            <input class="form-check-input" type="checkbox" name="accidente_laboral" value="work_accident" <?php echo ($novedad->work_accident == 1) ? 'checked' : ''?>>
+            <label class="form-check-label" for="accidente_laboral">
+                Accidente Laboral
+            </label> 
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="vacacion" value="vacations" <?php echo ($novedad->vacation == 1) ? 'checked' : ''?>>
+            <label class="form-check-label" for="vacaciones">
+                Vacaciones
+            </label>
+        </div>
+    </div>
 </form>
 
 @endsection

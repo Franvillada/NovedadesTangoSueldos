@@ -28,10 +28,8 @@ class UsersController extends Controller
         ]);
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'active' => 1])){
-            session()->regenerate();
             if(auth()->user()->role->role == 'superadmin'){
-                $clients = Client::all();
-                session(['clientes' => $clients]);
+                $request->session()->put('clientes', Client::all());
                 return redirect()->route('elegir_cliente');
             }
             

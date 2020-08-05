@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Imports\EmployeesImport;
 use Maatwebsite\Excel\Facades\Excel;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
+use Illuminate\Support\Arr;
 
 class EmployeesController extends Controller
 {
@@ -17,13 +18,19 @@ class EmployeesController extends Controller
      */
     public function indexLegajos(){
         $active = ['maestros','legajos'];
-        if(session()->has('clienteElegido') && auth()->user()->role->role == 'superadmin'){
+        if(session()->has('clienteElegido')){
             $empleados = Employee::where('client_id',session('clienteElegido')->id)->paginate(10);
         }else{
             $empleados = Employee::where('client_id',auth()->user()->client->id)->paginate(10);
         }
+        $vacacionesGozadasArr = [];
+        foreach ($empleados as $empleado) {
+            $vacacionesGozadas = $this->obtenerVacacionesGozadas($empleado);
+            $vacacionesGozadasArr = Arr::add($vacacionesGozadasArr,$empleado->employee_number,$vacacionesGozadas);
+        }
         return view('maestros.legajos') ->with('active',$active)
-                                        ->with('empleados',$empleados);
+                                        ->with('empleados',$empleados)
+                                        ->with('vacacionesGozadas',$vacacionesGozadasArr);
     }
 
     public function showNuevoLegajoForm(){
@@ -33,11 +40,11 @@ class EmployeesController extends Controller
 
     public function añadirLegajo(Request $request){
         $data = $this->validate($request,[
-            'legajo' => 'integer|required',
+            'legajo' => 'required|integer',
             'name' => 'required|string',
             'entry_date' => 'required|date',
-            'vacations' => 'integer|required',
-            'scoring' => 'integer'
+            'vacations' => 'required|integer',
+            'scoring' => 'nullable|integer'
         ]);
         $newLegajo = new Employee();
         if(session()->has('clienteElegido')){
@@ -75,8 +82,10 @@ class EmployeesController extends Controller
         $active = ['maestros','legajos'];
         
         $empleado = $this->obtenerEmpleado($request->legajo);
+        $vacacionesGozadas = $this->obtenerVacacionesGozadas($empleado);
         return view('maestros.editarLegajo')->with('empleado', $empleado)
-        ->with('active',$active);
+                                            ->with('active',$active)
+                                            ->with('vacacionesGozadas',$vacacionesGozadas);
     }
 
     public function editarLegajo(Request $request){
@@ -163,5 +172,15 @@ class EmployeesController extends Controller
         }
         return $empleados;
     }
-    
+
+    public function obtenerVacacionesGozadas($empleado){
+        $vacacionesGozadas = 0;
+        $registros = $empleado->noveltyRegister;
+        foreach ($registros as $registro) {
+            if($registro->novelty->vacation == 1){
+                $vacacionesGozadas += $registro->quantity;
+            }
+        }
+        return $vacacionesGozadas;
+    }
 }

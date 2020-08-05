@@ -77,11 +77,11 @@ class BackendController extends Controller
 
     public function añadirNovedad(Request $request){
         $data = $this->validate($request,[
-            'code' => 'string|required',
-            'description' => 'string|required',
-            'unit' => 'string|required',
+            'code' => 'required|string',
+            'description' => 'required|string',
+            'unit' => 'required|string',
         ]);
-        
+
         foreach(Novelty::all() as $novedad){
             if($novedad->code == $request->code){
                 return back()
@@ -93,6 +93,15 @@ class BackendController extends Controller
         $novedad->code = $request->code;
         $novedad->unit = $request->unit;
         $novedad->description = $request->description;
+        if($request->ausentismo){
+            $novedad->absence = 1;
+        }
+        if($request->accidente_laboral){
+            $novedad->work_accident = 1;
+        }
+        if($request->vacacion){
+            $novedad->vacation = 1;
+        }
         $novedad->save();
         return redirect()->route('backend_novedades');
     }
@@ -103,9 +112,9 @@ class BackendController extends Controller
 
     public function editarNovedad(Request $request){
         $data = $this->validate($request,[
-            'code' => 'string|required',
-            'description' => 'string|required',
-            'unit' => 'string|required',
+            'code' => 'required|string',
+            'description' => 'required|string',
+            'unit' => 'required|string',
         ]);
 
         if($request->code != $request->old_code){
@@ -122,7 +131,21 @@ class BackendController extends Controller
         $novedad->code = $request->code;
         $novedad->description = $request->description;
         $novedad->unit = $request->unit;
-       
+        if($request->ausentismo){
+            $novedad->absence = 1;
+        }else{
+            $novedad->absence = 0;
+        }
+        if($request->accidente_laboral){
+            $novedad->work_accident = 1;
+        }else{
+            $novedad->work_accident = 0;
+        }
+        if($request->vacacion){
+            $novedad->vacation = 1;
+        }else{
+            $novedad->vacation = 0;
+        }
         $novedad->save();
         return redirect()->route('backend_novedades');
     }
@@ -190,4 +213,5 @@ class BackendController extends Controller
     public function showEditarSuperadminForm(Request $request){
         return view('backend.editarSuperadmin')->with('user',User::where('email',$request->email)->get()->first());
     }
+
 }

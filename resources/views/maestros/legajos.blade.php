@@ -33,8 +33,8 @@
             <th scope="col">Legajo</th>
             <th scope="col">Nombre</th>
             <th scope="col">Ingreso</th>
-            <th scope="col">Egreso</th>
-            <th scope="col">Vacaciones</th>
+            <th scope="col">Vacaciones Gozadas</th>
+            <th scope="col">Saldo de Vacaciones</th>
             <th scope="col">Scoring</th>
             <th scope="col">Estado</th>
             </tr>
@@ -45,8 +45,8 @@
                 <td>{{ $empleado->employee_number }}</td>
                 <td>{{ $empleado->name }}</td>
                 <td>{{ $empleado->entry_date }}</td>
-                <td>{{ $empleado->leave_date }}</td>
-                <td>{{ $empleado->vacations }}</td>
+                <td>{{ $vacacionesGozadas[$empleado->employee_number] }}</td>
+                <td>{{ $empleado->vacations - $vacacionesGozadas[$empleado->employee_number]}}</td>
                 <td>{{ $empleado->scoring }}</td>
                 <td>{{ ($empleado->active) ? 'Habilitado' : 'Inhabilitado' }}</td>
             </tr>

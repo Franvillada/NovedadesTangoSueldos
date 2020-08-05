@@ -36,8 +36,8 @@ class NoveltyRegistersController extends Controller
 
     public function showAñadirRegistroForm(){
         $empleados = $this->obtenerTodosLosEmpleados();
-        $novedades = $empleados->first()->client->novelty;
-        return view('registro_novedades/añadirRegistro')
+        $novedades = $this->obtenerTodasLasNovedades();
+        return view('registro_novedades/nuevoRegistro')
                     ->with('active','novedades')
                     ->with('empleados',$empleados)
                     ->with('novedades',$novedades);
@@ -103,6 +103,16 @@ class NoveltyRegistersController extends Controller
         return $empleados;
     }
 
+    public function obtenerTodasLasNovedades(){
+        if(session()->has('clienteElegido')){
+            $novedades = session('clienteElegido')->novelty;
+        }else{
+            $novedades = auth()->user()->client->novelty;
+        }
+
+        return $novedades;
+    }
+
     public function showExportarForm(){
         return view('registro_novedades/exportarRegistros')
                     ->with('active','novedades');
@@ -136,8 +146,20 @@ class NoveltyRegistersController extends Controller
             $registro_editado->informed = 1;
             $registro_editado->save();
         }
-        session()->flash('download.in.the.next.request','registro_novedades.xlsx');
-        return redirect()->route('registro_novedades');
+        if(session()->has('clienteElegido')){
+            $client_id = session('clienteElegido')->id;
+        }else{
+            $client_id = auth()->user()->client->id;
+        }
+        $registros = DB::table('novelty_registers')
+                        ->join('employees','novelty_registers.employee_id','=','employees.id')
+                        ->join('novelties','novelty_registers.novelty_id','=','novelties.id')
+                        ->where('employees.client_id','=',$client_id)
+                        ->select('novelty_registers.id','novelty_registers.quantity','novelty_registers.date','novelty_registers.informed','employees.employee_number','employees.name','novelties.code','novelties.description')
+                        ->get();
+        return view('registro_novedades/registroNovedades')->with('active','novedades')
+                                        ->with('registros',$registros)
+                                        ->with('informado',1);
     }
     
     public function downloadExcel(){

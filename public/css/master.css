@@ -225,10 +225,13 @@ a:hover{
     margin: 0% 0%;
 }
 
-.maestros_form input, .maestros_form select, .maestros_form_usuarios input, .maestros_form_usuarios select{
+.maestros_form input, .maestros_form select,.maestros_form p, .maestros_form_usuarios input, .maestros_form_usuarios select{
     width: 75%;
 }
 
+.maestros_form p{
+    background-color: #e9ecef;
+}
 /* Maestros Usuarios Styles */
 
 .maestros_form_usuarios{
@@ -276,6 +279,21 @@ a:hover{
     top: 15px;
     right: 15px;
 }
+
+/* Alta Novedad Styles */
+
+.form-check{
+    margin: 0;
+    padding: 0!important;
+}
+
+.form-check-input{
+    position: initial;
+    width: initial!important;
+    margin: 0;
+    margin-right: 2%;
+}
+
 
 /* Registro Novedades Styles */
 

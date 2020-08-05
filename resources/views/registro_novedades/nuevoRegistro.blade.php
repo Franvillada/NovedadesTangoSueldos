@@ -9,16 +9,17 @@
         @csrf
         <div class="form-group accept_cancel_button">
             <button class="btn btn-success" type="submit">Aceptar</button>
-            <button class="btn btn-danger" type="submit">Cancelar</button>
+            <a href="{{ url()->previous() }}" class="btn btn-danger">Cancelar</a>
         </div>
         
         <div class="form-group">
             <label for="employee">Empleado:</label>
             <select name="employee" id="employee" class="form-control">
-                @foreach($empleados as $empleado){
+                @forelse($empleados as $empleado)
                     <option value="{{$empleado->id}}">{{ $empleado->employee_number }}: {{$empleado->name}}</option>
-                }
-                @endforeach
+                @empty
+                    <option value="">No hay legajos cargadas</option>
+                @endforelse
             </select>
         </div>
 
@@ -37,10 +38,11 @@
         <div class="form-group">
             <label for="novelty">Novedad:</label>
             <select name="novelty" id="novelty" class="form-control">
-                @foreach($novedades as $novedad){
+                @forelse($novedades as $novedad)
                     <option value="{{$novedad->id}}">{{$novedad->description}} ({{ $novedad->code }})</option>
-                }
-                @endforeach
+                @empty
+                    <option value="">No hay Novedades cargadas</option>
+                @endforelse
             </select>
         </div>
 

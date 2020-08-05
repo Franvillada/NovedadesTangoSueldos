@@ -77,7 +77,7 @@ class AppController extends Controller
 
     public function elegirCliente(Request $request){
         $client = Client::find($request->client);
-        session(['clienteElegido' => $client]);
+        $request->session()->put('clienteElegido', $client);
         if($client->business_name == 'Estudio MR y Asociados'){
             $request->session()->forget('clienteElegido');
             return redirect()->route('backend');
