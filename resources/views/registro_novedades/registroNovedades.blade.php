@@ -6,23 +6,48 @@
     </div>
     
     <div class="menu_maestros" id="menu_maestros">
-        <a href="{{ route('nuevo_registro') }}" class="btn boton_principal" id="nuevo">Nuevo</a>
-        <a href="{{ route('exportar_registros') }}" class="btn boton_principal" id="exportar">Exportar</a>
-        <form action="{{ route('editar_registro') }}" method="GET">
+        @foreach(auth()->user()->role->task as $permiso)
+            @if($permiso->task == 'registro-novedades/nuevo')
+                <a href="{{ route('nuevo_registro') }}" class="btn boton_principal" id="nuevo">Nuevo</a>
+            @endif
+        @endforeach
+        
+        @foreach(auth()->user()->role->task as $permiso)
+            @if($permiso->task == 'registro-novedades/exportar')
+                <a href="{{ route('exportar_registros') }}" class="btn boton_principal" id="exportar">Exportar</a>
+            @endif
+        @endforeach
+        
+        @foreach(auth()->user()->role->task as $permiso)
+            @if($permiso->task == 'registro-novedades/editar')
+            <form action="{{ route('editar_registro') }}" method="GET">
+                @csrf
+                <input type="hidden" name="registro_id" id="editar_input">
+                <button class="btn boton_principal display_none" id="editar" type="submit">Editar</button>
+            </form>
+            @endif
+        @endforeach
+        
+        @foreach(auth()->user()->role->task as $permiso)
+            @if($permiso->task == 'registro-novedades/desinformar')
+            <form action="{{ route('cambiar_estado_registro') }}" method="POST">
             @csrf
-            <input type="hidden" name="registro_id" id="editar_input">
-            <button class="btn boton_principal display_none" id="editar" type="submit">Editar</button>
-        </form>
-        <form action="{{ route('cambiar_estado_registro') }}" method="POST">
+                <input type="hidden" name="registro_id" id="cambiar_estado_input">
+                <button class="btn display_none font-weight-bold" id="cambiar_estado" type="submit"></button>
+            </form>
+            @endif
+        @endforeach
+        
+        @foreach(auth()->user()->role->task as $permiso)
+            @if($permiso->task == 'registro-novedades/eliminar')
+            <form action="{{ route('eliminar_registro') }}" method="POST">
             @csrf
-            <input type="hidden" name="registro_id" id="cambiar_estado_input">
-            <button class="btn display_none font-weight-bold" id="cambiar_estado" type="submit"></button>
-        </form>
-        <form action="{{ route('eliminar_registro') }}" method="POST">
-            @csrf
-            <input type="hidden" name="registro_id" id="eliminar_input">
-            <button class="btn display_none btn-danger font-weight-bold" id="eliminar" type="submit">Eliminar</button>
-        </form>
+                <input type="hidden" name="registro_id" id="eliminar_input">
+                <button class="btn display_none btn-danger font-weight-bold" id="eliminar" type="submit">Eliminar</button>
+            </form>
+            @endif
+        @endforeach
+        
         
     </div>
 

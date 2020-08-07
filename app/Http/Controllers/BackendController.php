@@ -12,9 +12,6 @@ use Illuminate\Support\Facades\Hash;
 
 class BackendController extends Controller
 {
-    public function index(){
-        return view('backend.index');
-    }
 
     public function indexClientes(){
         $clientes = Client::paginate(10);

@@ -6,17 +6,29 @@
     </div>
     
     <div class="menu_maestros" id="menu_maestros">
-        <a href="{{ route('nuevo_usuario') }}" class="btn boton_principal" id="nuevo">Nuevo</a>
-        <form action="{{ route('editar_usuario') }}" method="GET">
-            @csrf
-            <input type="hidden" name="email" id="editar_input">
-            <button class=" btn boton_principal display_none" id="editar" type="submit">Editar</button>
-        </form>
-        <form action="{{ route('cambiar_estado_usuario') }}" method="POST">
-            @csrf
-            <input type="hidden" name="email" id="cambiar_estado_input">
-            <button class=" btn display_none font-weight-bold" id="cambiar_estado" type="submit"></button>
-        </form>
+        @foreach(auth()->user()->role->task as $permiso)
+            @if($permiso->task == 'maestros/nuevo_usuario')
+                <a href="{{ route('nuevo_usuario') }}" class="btn boton_principal" id="nuevo">Nuevo</a>
+            @endif
+        @endforeach
+        @foreach(auth()->user()->role->task as $permiso)
+            @if($permiso->task == 'maestros/editar_usuario')
+            <form action="{{ route('editar_usuario') }}" method="GET">
+                @csrf
+                <input type="hidden" name="email" id="editar_input">
+                <button class=" btn boton_principal display_none" id="editar" type="submit">Editar</button>
+            </form>
+            @endif
+        @endforeach
+        @foreach(auth()->user()->role->task as $permiso)
+            @if($permiso->task == 'maestros/cambiar_estado_usuario')
+            <form action="{{ route('cambiar_estado_usuario') }}" method="POST">
+                @csrf
+                <input type="hidden" name="email" id="cambiar_estado_input">
+                <button class=" btn display_none font-weight-bold" id="cambiar_estado" type="submit"></button>
+            </form>
+            @endif
+        @endforeach
     </div>
 
     <table class="table" id="table">

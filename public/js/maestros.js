@@ -7,7 +7,6 @@ if(document.getElementById('menu_maestros')){
                 return
             }else{
                 if(document.getElementById('editar')){
-                    console.log('hola')
                     document.getElementById('editar').classList.remove('display_none')
                     if(this.cells[this.cells.length - 1].innerHTML == 'Habilitado'){
                         document.getElementById('cambiar_estado').innerHTML = 'Inhabilitar'
@@ -18,21 +17,26 @@ if(document.getElementById('menu_maestros')){
                         document.getElementById('cambiar_estado').classList.add('btn-success')
                         document.getElementById('cambiar_estado').classList.remove('btn-danger')
                     }else if(this.cells[this.cells.length - 1].innerHTML == 'Informado'){
-                        document.getElementById('cambiar_estado').innerHTML = 'Abrir'
-                        document.getElementById('cambiar_estado').classList.add('btn-danger')
+                        if(document.getElementById('cambiar_estado')){
+                            document.getElementById('cambiar_estado').innerHTML = 'Abrir'
+                            document.getElementById('cambiar_estado').classList.add('btn-danger')
+                        }
                         document.getElementById('editar').classList.add('display_none')
                         document.getElementById('eliminar').classList.add('display_none')
                     }
                     var f1 = document.getElementById('editar_input')
                     f1.value = this.cells[0].innerHTML
                 }
-                document.getElementById('cambiar_estado').classList.remove('display_none')
+                if(document.getElementById('cambiar_estado')){
+                    document.getElementById('cambiar_estado').classList.remove('display_none')
+                    
+                }
                 if(this.cells[this.cells.length - 1].innerHTML == 'Abierto'){
-                    document.getElementById('cambiar_estado').classList.add('display_none')
+                    if(document.getElementById('cambiar_estado')){
+                        document.getElementById('cambiar_estado').classList.add('display_none')    
+                    }
                     document.getElementById('eliminar').classList.remove("display_none")
                 }
-    
-                
                 var rows = document.getElementById('table').rows
                 for (var i=0; i<rows.length; i++) {
                     rows[i].style.backgroundColor = 'white'
@@ -40,10 +44,15 @@ if(document.getElementById('menu_maestros')){
                 }
                 this.style.backgroundColor = 'grey'
                 this.style.fontWeight = 'bold'
-                var f2 = document.getElementById('cambiar_estado_input')
-                f2.value = this.cells[0].innerHTML
-                var f3 = document.getElementById('eliminar_input')
-                f3.value = this.cells[0].innerHTML
+                if(document.getElementById('cambiar_estado_input')){
+                    var f2 = document.getElementById('cambiar_estado_input')
+                    f2.value = this.cells[0].innerHTML
+                }
+                
+                if(document.getElementById('eliminar_input')){
+                    var f3 = document.getElementById('eliminar_input')
+                    f3.value = this.cells[0].innerHTML
+                }
             }
             
         }

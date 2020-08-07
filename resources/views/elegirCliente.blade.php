@@ -17,5 +17,5 @@
         <button type="submit" class="btn boton_principal">Entrar</button>
     </form>
 </div>
-<a href="{{ route('backend') }}" class="backend-button btn boton_principal">Administrador</a>
+<a href="{{ route('backend_clientes') }}" class="backend-button btn boton_principal">Administrador</a>
 @endsection

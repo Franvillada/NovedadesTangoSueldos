@@ -57,11 +57,13 @@
         </select>        
     </div>
 </form>
-@if(auth()->user()->role->role == 'superadmin')
-    <form action="{{ route('reestablecer') }}" method="GET" class="reestablecer_contraseña">
+@foreach(auth()->user()->role->task as $permiso)
+    @if($permiso->task == 'maestros/restablecer')
+    <form action="{{ route('restablecer') }}" method="GET" class="reestablecer_contraseña">
         @csrf
         <input type="hidden" name="email" value="{{ $user->email }}">
-        <button class=" btn btn-danger" id="editar" type="submit"><?php echo ($user->email == auth()->user()->email) ? 'Cambiar Contraseña' : 'Reestablecer Contraseña' ?> </button>
+        <button class=" btn btn-danger" id="editar" type="submit"><?php echo ($user->email == auth()->user()->email) ? 'Cambiar Contraseña' : 'Restablecer Contraseña' ?> </button>
     </form>
-@endif
+    @endif
+@endforeach
 @endsection

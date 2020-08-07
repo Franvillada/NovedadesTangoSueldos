@@ -6,24 +6,43 @@
     </div>
     
     <div class="menu_maestros" id="menu_maestros">
-        <a href="{{ route('nuevo_legajo') }}" class="btn boton_principal" id="nuevo">Nuevo</a>
-        <form action="{{ route('importar_legajos') }}" method="post" class="importar" enctype="multipart/form-data">
+        @foreach(auth()->user()->role->task as $permiso)
+            @if($permiso->task == 'maestros/nuevo_legajo')
+                <a href="{{ route('nuevo_legajo') }}" class="btn boton_principal" id="nuevo">Nuevo</a>
+            @endif
+        @endforeach
+
+        @foreach(auth()->user()->role->task as $permiso)
+            @if($permiso->task == 'maestros/importar_legajos')
+            <form action="{{ route('importar_legajos') }}" method="post" class="importar" enctype="multipart/form-data">
+                @csrf
+                <label for="file" class="btn boton_principal mb-0">
+                    Importar
+                </label>
+                <input id="file" name="file" type="file" class="d-none" onchange="form.submit()"/>
+            </form>
+            @endif
+        @endforeach
+        
+        @foreach(auth()->user()->role->task as $permiso)
+            @if($permiso->task == 'maestros/editar_legajo')
+            <form action="{{ route('editar_legajo') }}" method="GET">
             @csrf
-            <label for="file" class="btn boton_principal mb-0">
-                Importar
-            </label>
-            <input id="file" name="file" type="file" class="d-none" onchange="form.submit()"/>
-        </form>
-        <form action="{{ route('editar_legajo') }}" method="GET">
+                <input type="hidden" name="legajo" id="editar_input">
+                <button class=" btn boton_principal display_none" id="editar" type="submit">Editar</button>
+            </form>
+            @endif
+        @endforeach
+        
+        @foreach(auth()->user()->role->task as $permiso)
+            @if($permiso->task == 'maestros/cambiar_estado_legajo')
+            <form action="{{ route('cambiar_estado_legajo') }}" method="POST">
             @csrf
-            <input type="hidden" name="legajo" id="editar_input">
-            <button class=" btn boton_principal display_none" id="editar" type="submit">Editar</button>
-        </form>
-        <form action="{{ route('cambiar_estado_legajo') }}" method="POST">
-            @csrf
-            <input type="hidden" name="legajo" id="cambiar_estado_input">
-            <button class=" btn display_none font-weight-bold" id="cambiar_estado" type="submit"></button>
-        </form>
+                <input type="hidden" name="legajo" id="cambiar_estado_input">
+                <button class=" btn display_none font-weight-bold" id="cambiar_estado" type="submit"></button>
+            </form>
+            @endif
+        @endforeach
         
     </div>
 

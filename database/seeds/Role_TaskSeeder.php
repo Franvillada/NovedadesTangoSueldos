@@ -71,8 +71,19 @@ class Role_TaskSeeder extends Seeder
             ['role_id' => 1,'task_id' => 30],
             ['role_id' => 2,'task_id' => 30],
             ['role_id' => 3,'task_id' => 30],
-            ['role_id' => 1,'task_id' => 31]
-
+            ['role_id' => 1,'task_id' => 31],
+            ['role_id' => 1,'task_id' => 32],
+            ['role_id' => 2,'task_id' => 32],
+            ['role_id' => 3,'task_id' => 32],
+            ['role_id' => 1,'task_id' => 33],
+            ['role_id' => 2,'task_id' => 33],
+            ['role_id' => 3,'task_id' => 33],
+            ['role_id' => 1,'task_id' => 34],
+            ['role_id' => 1,'task_id' => 35],
+            ['role_id' => 1,'task_id' => 36],
+            ['role_id' => 2,'task_id' => 36],
+            ['role_id' => 3,'task_id' => 36],
+            ['role_id' => 1,'task_id' => 37]
         ];
 
         DB::table('role_task')->insert($permissions);

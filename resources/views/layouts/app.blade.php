@@ -13,29 +13,33 @@
 <body>
     <div class="header">
         <div class="business-header">
-            @if(auth()->user()->role->role == 'superadmin')
-            <form action="{{ route('elegir_cliente') }}" method="post">
-                @csrf
-                <div>
-                    <select name="client" id="client" class="form-control" onchange="form.submit()">
-                        @if(session()->has('clienteElegido'))
-                            @foreach(session('clientes') as $client)
-                                <option value="{{ $client->id }}" <?php echo ($client->id == session('clienteElegido')->id) ? 'selected' : '' ?>>{{ $client->business_name }}</option>
-                            @endforeach
-                        @else
-                            @foreach(session('clientes') as $client)
-                                <option value="{{ $client->id }}" <?php echo ($client->id == auth()->user()->client->id) ? 'selected' : '' ?>>{{ $client->business_name }}</option>
-                            @endforeach
-                        @endif
-                    </select>
-                </div>
-            </form>
-            @else
+            @foreach(auth()->user()->role->task as $permiso)
+                @if($permiso->task == 'elegir_cliente')
+                <form action="{{ route('elegir_cliente') }}" method="post">
+                    @csrf
+                    <div>
+                        <select name="client" id="client" class="form-control" onchange="form.submit()">
+                            @if(session()->has('clienteElegido'))
+                                @foreach(session('clientes') as $client)
+                                    <option value="{{ $client->id }}" <?php echo ($client->id == session('clienteElegido')->id) ? 'selected' : '' ?>>{{ $client->business_name }}</option>
+                                @endforeach
+                            @else
+                                @foreach(session('clientes') as $client)
+                                    <option value="{{ $client->id }}" <?php echo ($client->id == auth()->user()->client->id) ? 'selected' : '' ?>>{{ $client->business_name }}</option>
+                                @endforeach
+                            @endif
+                        </select>
+                    </div>
+                </form>
+                @endif
+            @endforeach
+            
+            @if(auth()->user()->role->role != 'superadmin')
             <p>{{ auth()->user()->client->business_name }}</p>
             @endif
         </div>
         <div class="user-header">
-            <a href="{{ route('editar_usuario') }}">{{ auth()->user()->username}}</a>
+            <a href="{{ route('editar_propio') }}">{{ auth()->user()->username}}</a>
             <form action="{{ route('logout') }}" method="post">
                 @csrf
                 <button type="submit" class="btn btn-danger">Cerrar sesión</button>

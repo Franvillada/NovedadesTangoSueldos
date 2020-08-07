@@ -19,15 +19,13 @@ Route::get('/', function () {
 
 Route::post('/login','UsersController@login')->name('login');
 
-Route::middleware('auth')->group(function(){
+Route::middleware('auth','permission')->group(function(){
 
     Route::post('/logout','UsersController@logout')->name('logout');
     
     Route::middleware('superadmin')->group(function(){
         Route::get('/elegir_cliente' , 'AppController@elegirClienteForm')->name('elegir_cliente');
         Route::post('/elegir_cliente', 'AppController@elegirCliente')->name('elegir_cliente');
-
-        Route::get('/backend','BackendController@index')->name('backend');
 
         Route::get('/backend/clientes', 'BackendController@indexClientes')->name('backend_clientes');
         Route::get('/backend/nuevo_cliente','BackendController@showNuevoClienteForm')->name('nuevo_cliente');
@@ -49,8 +47,8 @@ Route::middleware('auth')->group(function(){
         Route::post('/backend/nuevo_superadmin','BackendController@superadmin')->name('nuevo_superadmin');
         Route::get('/backend/editar_superadmin','BackendController@showEditarSuperadminForm')->name('editar_superadmin');
         Route::post('/backend/editar_superadmin','BackendController@editarSuperadmin')->name('editar_superadmin');
-        Route::get('backend/reestablecer', 'BackendController@showReestablecerForm')->name('reestablecer_superadmin');
-        Route::post('backend/reestablecer','BackendController@reestablecerPassword')->name('reestablecer_superadmin');
+        Route::get('backend/restablecer', 'BackendController@showReestablecerForm')->name('reestablecer_superadmin');
+        Route::post('backend/restablecer','BackendController@reestablecerPassword')->name('reestablecer_superadmin');
     });
     
 
@@ -58,10 +56,11 @@ Route::middleware('auth')->group(function(){
     Route::get('/maestros/nuevo_usuario','UsersController@showNuevoUsuarioForm')->name('nuevo_usuario');
     Route::post('/maestros/nuevo_usuario','UsersController@registrarUsuario')->name('nuevo_usuario');
     Route::get('maestros/editar_usuario', 'UsersController@showEditarUsuarioForm')->name('editar_usuario');
+    Route::get('editarInformacionPropia', 'UsersController@showEditarUsuarioForm')->name('editar_propio');
     Route::post('maestros/editar_usuario', 'UsersController@editarUsuario')->name('editar_usuario');
     Route::post('maestros/cambiar_estado_usuario', 'UsersController@cambiarEstadoUsuario')->name('cambiar_estado_usuario');
-    Route::get('maestros/reestablecer', 'UsersController@showReestablecerForm')->name('reestablecer');
-    Route::post('maestros/reestablecer','UsersController@reestablecerPassword')->name('reestablecer');
+    Route::get('maestros/restablecer', 'UsersController@showReestablecerForm')->name('restablecer');
+    Route::post('maestros/restablecer','UsersController@reestablecerPassword')->name('restablecer');
     
     Route::get('maestros/legajos','EmployeesController@indexLegajos')->name('legajos');
     Route::get('maestros/nuevo_legajo','EmployeesController@showNuevoLegajoForm')->name('nuevo_legajo');
@@ -72,8 +71,8 @@ Route::middleware('auth')->group(function(){
     Route::post('maestros/importar_legajos','EmployeesController@importarLegajos')->name('importar_legajos');
     
     Route::get('/maestros/novedades','NoveltysController@indexNovedades')->name('novedades');
-    Route::get('/maestros/añadir_relacion','NoveltysController@showAñadirRelacionForm')->name('añadir_relacion');
-    Route::post('/maestros/añadir_relacion','NoveltysController@añadirRelacion')->name('añadir_relacion');
+    Route::get('/maestros/nueva_relacion','NoveltysController@showAñadirRelacionForm')->name('nueva_relacion');
+    Route::post('/maestros/nueva_relacion','NoveltysController@añadirRelacion')->name('nueva_relacion');
     Route::post('maestros/eliminar_relacion','NoveltysController@eliminarRelacion')->name('eliminar_relacion');
 
     Route::get('registro-novedades','NoveltyRegistersController@index')->name('registro_novedades');
@@ -81,7 +80,7 @@ Route::middleware('auth')->group(function(){
     Route::post('registro-novedades/nuevo','NoveltyRegistersController@añadirRegistro')->name('nuevo_registro');
     Route::get('registro-novedades/editar','NoveltyRegistersController@showEditarRegistroForm')->name('editar_registro');
     Route::post('registro-novedades/editar','NoveltyRegistersController@editarRegistro')->name('editar_registro');
-    Route::post('registro-novedades/informar','NoveltyRegistersController@cambiarEstadoRegistro')->name('cambiar_estado_registro');
+    Route::post('registro-novedades/desinformar','NoveltyRegistersController@cambiarEstadoRegistro')->name('cambiar_estado_registro');
     Route::post('registro-novedades/eliminar','NoveltyRegistersController@eliminarRegistro')->name('eliminar_registro');
     Route::get('registro-novedades/exportar','NoveltyRegistersController@showExportarForm')->name('exportar_registros');
     Route::post('registro-novedades/exportar','NoveltyRegistersController@storeExcel')->name('exportar_registros');

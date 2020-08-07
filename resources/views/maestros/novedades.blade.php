@@ -3,16 +3,25 @@
 @section('sub-content')
 <div>
     <h3>Novedades</h3>
-    @if(auth()->user()->role->role == 'superadmin')
+    
     <div class="menu_maestros" id="menu_maestros">
-        <a href="{{ route('añadir_relacion') }}" class="btn boton_principal" id="nuevo">Agregar</a>
-        <form action="{{ route('eliminar_relacion') }}" method="POST">
-            @csrf
-            <input type="hidden" name="code" id="cambiar_estado_input">
-            <button class=" btn display_none btn-danger font-weight-bold" id="cambiar_estado" type="submit">Eliminar</button>
-        </form>
+        @foreach(auth()->user()->role->task as $permiso)
+            @if($permiso->task == 'maestros/nueva_relacion')
+                <a href="{{ route('nueva_relacion') }}" class="btn boton_principal" id="nuevo">Agregar</a>
+            @endif
+        @endforeach
+        @foreach(auth()->user()->role->task as $permiso)
+            @if($permiso->task == 'maestros/eliminar_relacion')
+            <form action="{{ route('eliminar_relacion') }}" method="POST">
+                @csrf
+                <input type="hidden" name="code" id="cambiar_estado_input">
+                <button class=" btn display_none btn-danger font-weight-bold" id="cambiar_estado" type="submit">Eliminar</button>
+            </form>
+            @endif
+        @endforeach
+        
     </div>
-    @else
+    @if(auth()->user()->role->role != 'superadmin')
     <p><strong>Para agregar una nueva novedad contactar a MR y Asociados</strong></p>
     @endif
     <p class="mt-5">Novedades en uso actualmente:</p>

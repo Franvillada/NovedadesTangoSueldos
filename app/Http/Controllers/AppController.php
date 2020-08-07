@@ -80,7 +80,7 @@ class AppController extends Controller
         $request->session()->put('clienteElegido', $client);
         if($client->business_name == 'Estudio MR y Asociados'){
             $request->session()->forget('clienteElegido');
-            return redirect()->route('backend');
+            return redirect()->route('backend_clientes');
         }else{
             return redirect()->route('kpi')  ->with('active','kpi')
             ->with('client',$client);

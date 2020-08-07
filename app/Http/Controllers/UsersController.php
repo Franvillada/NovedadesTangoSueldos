@@ -109,7 +109,7 @@ class UsersController extends Controller
         $user = User::where('email',$request->email)->get()->first();
         $user->active = !$user->active;
         $user->save();
-        return redirect()->route('usuarios');
+        return redirect()->back();
     }
 
     public function showReestablecerForm(Request $request){
