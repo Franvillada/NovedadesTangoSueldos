@@ -34,7 +34,7 @@ class NoveltyRegistersController extends Controller
                                         ->with('registros',$registros);
     }
 
-    public function showAñadirRegistroForm(){
+    public function showNuevoRegistroForm(){
         $empleados = $this->obtenerTodosLosEmpleados();
         $novedades = $this->obtenerTodasLasNovedades();
         return view('registro_novedades/nuevoRegistro')
@@ -43,7 +43,7 @@ class NoveltyRegistersController extends Controller
                     ->with('novedades',$novedades);
     }
 
-    public function añadirRegistro(Request $request){
+    public function nuevoRegistro(Request $request){
         $validatedData = $request->validate([
             'employee' => 'required',
             'date' => 'required',

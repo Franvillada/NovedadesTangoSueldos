@@ -130,8 +130,9 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'business_name' => [
+            'required' => 'La Razon Social es requerida',
+            'unique' => 'La Razon Social ya se encuentra en uso',
         ],
     ],
 

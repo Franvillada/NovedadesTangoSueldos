@@ -47,9 +47,12 @@
         </div>
         
     </div>
-    @if($errors->any())
-    <span class="popuptext alert-danger" id="pop-up">No tiene permiso para realizar esa accion</span>
-    @endif
+    @forelse($errors->all() as $error)
+        @if($error == "No tiene permisos para realizar esta accion")
+            <span class="popuptext alert-danger" id="pop-up">No tiene permiso para realizar esa accion</span>
+        @endif
+    @empty
+    @endforelse
     <div class="main-container">
         @yield('content')
     </div>

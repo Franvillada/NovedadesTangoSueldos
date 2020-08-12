@@ -20,7 +20,7 @@ class NoveltysController extends Controller
                                             ->with('novedades',$novedades);
     }
     
-    public function showAñadirRelacionForm(){
+    public function showNuevaRelacionForm(){
         $active = ['maestros','novedades'];
         $novedades = Novelty::all();
         $novedades_disponibles = $novedades->reject(function($value){
@@ -31,7 +31,7 @@ class NoveltysController extends Controller
                                                 ->with('novedades_disponibles',$novedades_disponibles);
     }
 
-    public function añadirRelacion(Request $request){
+    public function nuevaRelacion(Request $request){
         if(session()->has('clienteElegido')){
             $client = session('clienteElegido');
         }else{

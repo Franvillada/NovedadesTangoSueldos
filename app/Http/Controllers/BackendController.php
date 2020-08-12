@@ -22,9 +22,9 @@ class BackendController extends Controller
         return view('backend.nuevoCliente');
     }
 
-    public function añadirCliente(Request $request){
+    public function nuevoCliente(Request $request){
         $data = $this->validate($request,[
-            'business_name' => 'string|required',
+            'business_name' => 'bail|required|string|unique:clients',
         ]);
         $cliente = new Client();
         
@@ -72,7 +72,7 @@ class BackendController extends Controller
         return view('backend.nuevaNovedad');
     }
 
-    public function añadirNovedad(Request $request){
+    public function nuevaNovedad(Request $request){
         $data = $this->validate($request,[
             'code' => 'required|string',
             'description' => 'required|string',

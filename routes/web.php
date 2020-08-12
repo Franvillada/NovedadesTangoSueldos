@@ -29,14 +29,14 @@ Route::middleware('auth','permission')->group(function(){
 
         Route::get('/backend/clientes', 'BackendController@indexClientes')->name('backend_clientes');
         Route::get('/backend/nuevo_cliente','BackendController@showNuevoClienteForm')->name('nuevo_cliente');
-        Route::post('/backend/nuevo_cliente','BackendController@añadirCliente')->name('nuevo_cliente');
+        Route::post('/backend/nuevo_cliente','BackendController@nuevoCliente')->name('nuevo_cliente');
         Route::get('/backend/editar_cliente', 'BackendController@showEditarClienteForm')->name('editar_cliente');
         Route::post('/backend/editar_cliente', 'BackendController@editarCliente')->name('editar_cliente');
         Route::post('/backend/cambiar_estado_cliente','BackendController@cambiarEstadoCliente')->name('cambiar_estado_cliente');
 
         Route::get('/backend/novedades', 'BackendController@indexNovedades')->name('backend_novedades');
         Route::get('/backend/nueva_novedad', 'BackendController@showNuevaNovedadForm')->name('nueva_novedad');
-        Route::post('/backend/nueva_novedad','BackendController@añadirNovedad')->name('nueva_novedad');
+        Route::post('/backend/nueva_novedad','BackendController@nuevaNovedad')->name('nueva_novedad');
         Route::get('/backend/editar_novedad', 'BackendController@showEditarNovedadForm')->name('editar_novedad');
         Route::post('/backend/editar_novedad', 'BackendController@editarNovedad')->name('editar_novedad');
         Route::post('/backend/cambiar_estado_novedad','BackendController@cambiarEstadoNovedad')->name('cambiar_estado_novedad');
@@ -64,20 +64,20 @@ Route::middleware('auth','permission')->group(function(){
     
     Route::get('maestros/legajos','EmployeesController@indexLegajos')->name('legajos');
     Route::get('maestros/nuevo_legajo','EmployeesController@showNuevoLegajoForm')->name('nuevo_legajo');
-    Route::post('maestros/nuevo_legajo','EmployeesController@añadirLegajo')->name('nuevo_legajo');
+    Route::post('maestros/nuevo_legajo','EmployeesController@nuevoLegajo')->name('nuevo_legajo');
     Route::get('maestros/editar_legajo', 'EmployeesController@showEditarLegajoForm')->name('editar_legajo');
     Route::post('maestros/editar_legajo', 'EmployeesController@editarLegajo')->name('editar_legajo');
     Route::post('maestros/cambiar_estado_legajo', 'EmployeesController@cambiarEstadoLegajo')->name('cambiar_estado_legajo');
     Route::post('maestros/importar_legajos','EmployeesController@importarLegajos')->name('importar_legajos');
     
     Route::get('/maestros/novedades','NoveltysController@indexNovedades')->name('novedades');
-    Route::get('/maestros/nueva_relacion','NoveltysController@showAñadirRelacionForm')->name('nueva_relacion');
-    Route::post('/maestros/nueva_relacion','NoveltysController@añadirRelacion')->name('nueva_relacion');
+    Route::get('/maestros/nueva_relacion','NoveltysController@showNuevaRelacionForm')->name('nueva_relacion');
+    Route::post('/maestros/nueva_relacion','NoveltysController@nuevaRelacion')->name('nueva_relacion');
     Route::post('maestros/eliminar_relacion','NoveltysController@eliminarRelacion')->name('eliminar_relacion');
 
     Route::get('registro-novedades','NoveltyRegistersController@index')->name('registro_novedades');
-    Route::get('registro-novedades/nuevo','NoveltyRegistersController@showAñadirRegistroForm')->name('nuevo_registro');
-    Route::post('registro-novedades/nuevo','NoveltyRegistersController@añadirRegistro')->name('nuevo_registro');
+    Route::get('registro-novedades/nuevo','NoveltyRegistersController@showNuevoRegistroForm')->name('nuevo_registro');
+    Route::post('registro-novedades/nuevo','NoveltyRegistersController@nuevoRegistro')->name('nuevo_registro');
     Route::get('registro-novedades/editar','NoveltyRegistersController@showEditarRegistroForm')->name('editar_registro');
     Route::post('registro-novedades/editar','NoveltyRegistersController@editarRegistro')->name('editar_registro');
     Route::post('registro-novedades/desinformar','NoveltyRegistersController@cambiarEstadoRegistro')->name('cambiar_estado_registro');

@@ -38,7 +38,7 @@ class EmployeesController extends Controller
         return view('maestros.nuevoLegajo')->with('active',$active);
     }
 
-    public function añadirLegajo(Request $request){
+    public function nuevoLegajo(Request $request){
         $data = $this->validate($request,[
             'legajo' => 'required|integer',
             'name' => 'required|string',
