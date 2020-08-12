@@ -14,7 +14,9 @@ class BackendController extends Controller
 {
 
     public function indexClientes(){
-        $clientes = Client::paginate(10);
+        $queryClients = Client::query();
+        $queryClients->where('business_name','!=','Estudio MR y Asociados');
+        $clientes = $queryClients->paginate(10);
         return view('backend.clientes')->with('clientes',$clientes);
     }
 
@@ -31,8 +33,10 @@ class BackendController extends Controller
         $cliente->business_name = $request->business_name;
         $cliente->save();
 
-        $clients = Client::all(); 
-        session(['clientes' => $clients]);
+        $clients = Client::all()->reject(function ($value){
+            return $value->business_name == 'Estudio MR y Asociados';
+        });
+        $request->session()->put('clientes', $clients);
         
         return redirect()->route('backend_clientes');
     }

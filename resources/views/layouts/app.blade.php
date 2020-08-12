@@ -20,10 +20,12 @@
                     <div>
                         <select name="client" id="client" class="form-control" onchange="form.submit()">
                             @if(session()->has('clienteElegido'))
+                                <option value="{{auth()->user()->client->id}}">{{auth()->user()->client->business_name}}</option>
                                 @foreach(session('clientes') as $client)
                                     <option value="{{ $client->id }}" <?php echo ($client->id == session('clienteElegido')->id) ? 'selected' : '' ?>>{{ $client->business_name }}</option>
                                 @endforeach
                             @else
+                                <option value="{{auth()->user()->client->id}}">{{auth()->user()->client->business_name}}</option>
                                 @foreach(session('clientes') as $client)
                                     <option value="{{ $client->id }}" <?php echo ($client->id == auth()->user()->client->id) ? 'selected' : '' ?>>{{ $client->business_name }}</option>
                                 @endforeach

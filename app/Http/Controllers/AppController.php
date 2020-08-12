@@ -17,7 +17,7 @@ class AppController extends Controller
     }
 
     public function elegirCliente(Request $request){
-        if($request->business_name == null){
+        if($request->client == null){
             return back()->withErrors('Debe elegir una empresa');
         }
         $client = Client::find($request->client);

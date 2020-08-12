@@ -14,7 +14,7 @@
                 <option disabled selected>No se cargo ninguna empresa</option>
                 @endforelse
             </select>
-            <div class="{{ $errors ? 'alert alert-danger' : '' }}">
+            <div class="{{ $errors->any() ? 'alert alert-danger' : '' }}">
                 {!! $errors->first() !!}
             </div>
         </div>

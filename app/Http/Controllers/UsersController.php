@@ -30,7 +30,9 @@ class UsersController extends Controller
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'active' => 1])){
             if(auth()->user()->role->role == 'superadmin'){
-                $request->session()->put('clientes', Client::all());
+                $request->session()->put('clientes', Client::all()->reject(function ($value,$key){
+                    return $value->business_name == 'Estudio MR y Asociados';
+                }));
                 return redirect()->route('elegir_cliente');
             }
             
