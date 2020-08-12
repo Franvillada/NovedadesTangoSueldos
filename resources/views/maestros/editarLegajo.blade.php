@@ -9,7 +9,7 @@
         @csrf
         <div class="form-group accept_cancel_button">
             <button class="btn btn-success" type="submit">Aceptar</button>
-            <a href="{{ url()->previous() }}" class="btn btn-danger">Cancelar</a>
+            <a href="{{ route('legajos') }}" class="btn btn-danger">Cancelar</a>
         </div>
         <input type="hidden" name="old_legajo" value="{{ $empleado->employee_number}} ">
         <div class="form-group">

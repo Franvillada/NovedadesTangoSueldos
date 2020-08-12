@@ -9,7 +9,7 @@
         @csrf
         <div class="form-group accept_cancel_button">
             <button class="btn btn-success" type="submit">Aceptar</button>
-            <a href="{{ url()->previous() }}" class="btn btn-danger">Cancelar</a>
+            <a href="{{ route('registro_novedades') }}" class="btn btn-danger">Cancelar</a>
         </div>
         
         <div class="form-group">

@@ -63,13 +63,19 @@ class NoveltyRegistersController extends Controller
     public function showEditarRegistroForm(Request $request){
         $registro = NoveltyRegister::where('id',$request->registro_id)->first();
         $novedades = $registro->employee->client->novelty;
-        return view('registro_novedades/editarRegistro')
+        /*$registro->date = date('d-m-Y',strtotime($registro->date));
+        */return view('registro_novedades/editarRegistro')
                     ->with('active','novedades')
                     ->with('registro',$registro)
                     ->with('novedades',$novedades);
     }
 
     public function editarRegistro(Request $request){
+        $validatedData = $request->validate([
+            'date' => 'required',
+            'novelty' => 'required',
+            'quantity' => 'required'
+        ]);
         $registro = NoveltyRegister::where('id',$request->registro_id)->first();
 
         $registro->novelty_id = $request->novelty;

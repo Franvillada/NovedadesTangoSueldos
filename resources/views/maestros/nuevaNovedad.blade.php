@@ -8,7 +8,7 @@
         @csrf
         <div class="form-group accept_cancel_button">
             <button class="btn btn-success" type="submit">Aceptar</button>
-            <a href="{{ url()->previous() }}" class="btn btn-danger">Cancelar</a>
+            <a href="{{ route('novedades') }}" class="btn btn-danger">Cancelar</a>
         </div>
         <div class="form-group añadir_novedad_group">
             <p class="mt-3"><strong>IMPORTANTE</strong>:Para hacer una seleccion multiple mantener presionado la tecla CTRL</p>

@@ -73,7 +73,7 @@
                 <td>{{ $registro->code }}</td>
                 <td>{{ $registro->description }}</td>
                 <td>{{ $registro->quantity }}</td>
-                <td>{{ $registro->date }}</td>
+                <td>{{ date('d-m-Y', strtotime($registro->date)) }}</td>
                 <td>{{ ($registro->informed == 1) ? 'Informado' : 'Abierto' }}</td>
             </tr>
             @empty

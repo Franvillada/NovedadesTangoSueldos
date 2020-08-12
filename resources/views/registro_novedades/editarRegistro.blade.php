@@ -9,7 +9,7 @@
         @csrf
         <div class="form-group accept_cancel_button">
             <button class="btn btn-success" type="submit">Aceptar</button>
-            <a href="{{ url()->previous() }}" class="btn btn-danger">Cancelar</a>
+            <a href="{{ route('registro_novedades') }}" class="btn btn-danger">Cancelar</a>
         </div>
         <input type="hidden" name="registro_id" value="{{ $registro->id}} ">
         <div class="form-group">
@@ -25,7 +25,7 @@
                     type="date" 
                     name="date" 
                     id="date"
-                    value="{{ $registro->date }}" 
+                    value="{{ date('Y-m-d',strtotime($registro->date)) }}" 
                     >
             <div class="{{ $errors->has('date') ? 'alert alert-danger' : '' }}">
                 {!! $errors->first('date', '<span>:message</span>') !!}
@@ -40,6 +40,9 @@
                 }
                 @endforeach
             </select>
+            <div class="{{ $errors->has('novelty') ? 'alert alert-danger' : '' }}">
+                {!! $errors->first('novelty', '<span>:message</span>') !!}
+            </div>
         </div>
 
         <div class="form-group">
@@ -49,7 +52,10 @@
                     name="quantity" 
                     id="quantity"
                     value="{{$registro->quantity }}"
-                    placeholder="">    
+                    >
+            <div class="{{ $errors->has('quantity') ? 'alert alert-danger' : '' }}">
+                {!! $errors->first('quantity', '<span>:message</span>') !!}
+            </div>    
         </div>
         
     </form>

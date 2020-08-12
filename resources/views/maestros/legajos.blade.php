@@ -63,7 +63,7 @@
             <tr>
                 <td>{{ $empleado->employee_number }}</td>
                 <td>{{ $empleado->name }}</td>
-                <td>{{ $empleado->entry_date }}</td>
+                <td>{{ date('d-m-Y', strtotime($empleado->entry_date)) }}</td>
                 <td>{{ $vacacionesGozadas[$empleado->employee_number] }}</td>
                 <td>{{ $empleado->vacations - $vacacionesGozadas[$empleado->employee_number]}}</td>
                 <td>{{ $empleado->scoring }}</td>

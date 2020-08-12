@@ -134,6 +134,15 @@ return [
             'required' => 'La Razon Social es requerida',
             'unique' => 'La Razon Social ya se encuentra en uso',
         ],
+        'date' => [
+            'required' => 'La Fecha es requerida'
+        ],
+        'novelty' => [
+            'required' => 'La Novedad es requerida'
+        ],
+        'quantity' => [
+            'required' => 'La Cantidad es requerida'
+        ]
     ],
 
     /*
