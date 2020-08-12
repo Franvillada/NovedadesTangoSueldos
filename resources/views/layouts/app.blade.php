@@ -47,8 +47,18 @@
         </div>
         
     </div>
+    @if($errors->any())
+    <span class="popuptext alert-danger" id="pop-up">No tiene permiso para realizar esa accion</span>
+    @endif
     <div class="main-container">
         @yield('content')
     </div>
+    <script>
+        if(document.getElementById('pop-up')){
+            setTimeout(function(){
+                document.getElementById('pop-up').style.display = 'none'
+            },1500);
+        }
+    </script>
 </body>
 </html>

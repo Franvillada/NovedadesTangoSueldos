@@ -330,3 +330,15 @@ a:hover{
     border: 1px solid grey;
     margin: 2%;
 }
+
+/* Pop up Error */
+
+.popuptext{
+    position: relative;
+    left: 35%;
+    display: block;
+    width: 30%;
+    text-align: center;
+    border-radius: 3px;
+    font-size: 1.3rem;
+}

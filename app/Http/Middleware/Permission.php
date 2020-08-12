@@ -20,6 +20,6 @@ class Permission
                 return $next($request);
             }
         }
-        return redirect()->back()->withError('Permiso', 'No tiene permisos para realizar esta accion');
+        return redirect()->back()->withErrors(['Permiso', 'No tiene permisos para realizar esta accion']);
     }
 }
