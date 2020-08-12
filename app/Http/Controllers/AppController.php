@@ -10,8 +10,26 @@ use App\Employee;
 class AppController extends Controller
 {
     public function elegirClienteForm(){
-        $clients = Client::all();
+        $clients = Client::all()->reject(function ($value,$key){
+            return $value->business_name == 'Estudio MR y Asociados';
+        });
         return view('elegirCliente')->with('clients',$clients);
+    }
+
+    public function elegirCliente(Request $request){
+        if($request->business_name == null){
+            return back()->withErrors('Debe elegir una empresa');
+        }
+        $client = Client::find($request->client);
+        $request->session()->put('clienteElegido', $client);
+        if($client->business_name == 'Estudio MR y Asociados'){
+            $request->session()->forget('clienteElegido');
+            return redirect()->route('backend_clientes');
+        }else{
+            return redirect()->route('kpi')  ->with('active','kpi')
+            ->with('client',$client);
+        }
+        
     }
 
     public function showKpi(){
@@ -73,19 +91,6 @@ class AppController extends Controller
                             ->with('ausentismo_laboral',$ausentismo_laboral)
                             ->with('accidentalidad_laboral_legajos',$accidentalidad_laboral_legajos)
                             ->with('accidentalidad_laboral_dias',$accidentalidad_laboral_dias);
-    }
-
-    public function elegirCliente(Request $request){
-        $client = Client::find($request->client);
-        $request->session()->put('clienteElegido', $client);
-        if($client->business_name == 'Estudio MR y Asociados'){
-            $request->session()->forget('clienteElegido');
-            return redirect()->route('backend_clientes');
-        }else{
-            return redirect()->route('kpi')  ->with('active','kpi')
-            ->with('client',$client);
-        }
-        
     }
 
 }
