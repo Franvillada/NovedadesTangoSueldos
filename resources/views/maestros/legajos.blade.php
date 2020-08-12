@@ -71,7 +71,7 @@
             </tr>
             @empty
                 <tr>
-                    <td colspan="7" class="text-center">No se cargo ningun legajo al sistema</td>
+                    <td colspan="7" class="text-center">No se cargaron datos</td>
                 </tr>
             @endforelse
         </tbody>

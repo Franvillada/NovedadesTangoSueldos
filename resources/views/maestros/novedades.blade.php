@@ -44,7 +44,7 @@
     </tr>
     @empty
     <tr>
-        <td colspan="3" class="text-center">Ninguna novedad cargada al sistema</td>
+        <td colspan="3" class="text-center">No se cargaron datos</td>
     </tr>
     @endforelse
     </tbody>

@@ -36,7 +36,7 @@
         </tr>
         @empty
             <tr>
-                <td>No se cargo ningun usuario al sistema</td>
+                <td>No se cargaron datos</td>
             </tr>
         @endforelse
         </tbody>

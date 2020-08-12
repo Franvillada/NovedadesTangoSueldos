@@ -50,7 +50,7 @@
         </tr>
         @empty
             <tr>
-                <td colspan="4" class="text-center">No se cargo ningun usuario al sistema</td>
+                <td colspan="4" class="text-center">No se cargaron datos</td>
             </tr>
         @endforelse
         </tbody>
