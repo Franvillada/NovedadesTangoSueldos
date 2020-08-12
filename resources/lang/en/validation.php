@@ -142,7 +142,14 @@ return [
         ],
         'quantity' => [
             'required' => 'La Cantidad es requerida'
-        ]
+        ],
+        'email' => [
+            'required' => 'El Email es requerido',
+            'email' => 'No se ingreso un email valido'
+        ],
+        'password' => [
+            'required' => 'Debe ingresar una contraseña'
+        ],
     ],
 
     /*

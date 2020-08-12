@@ -13,7 +13,7 @@
                         name="email" 
                         id="email"
                         value="{{ old('email') }}"
-                        placeholder="Ingresa tu email">
+                        >
                 <div class="{{ $errors->has('email') ? 'alert alert-danger' : 'd-none' }}">
                     {!! $errors->first('email', '<span>:message</span>') !!}
                 </div>    
@@ -25,7 +25,7 @@
                         type="password" 
                         name="password" 
                         id="password" 
-                        placeholder="Ingresa tu contraseña">
+                        >
                 <div class="{{ $errors->has('password') ? 'alert alert-danger' : 'd-none' }}">
                     {!! $errors->first('password', '<span>:message</span>') !!}
                 </div>
