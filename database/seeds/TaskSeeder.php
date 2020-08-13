@@ -30,7 +30,7 @@ class TaskSeeder extends Seeder
             ['task' => 'maestros/importar_relacion'],
             ['task' => 'maestros/novedades'],
             ['task' => 'maestros/nuevo_legajo'],
-            ['task' => 'maestros/importar_legajo'],
+            ['task' => 'maestros/importar_legajos'],
             ['task' => 'maestros/editar_legajo'],
             ['task' => 'maestros/cambiar_estado_legajo'],
             ['task' => 'maestros/legajos'],
