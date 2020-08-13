@@ -52,6 +52,8 @@
     @forelse($errors->all() as $error)
         @if($error == "No tiene permisos para realizar esta accion")
             <span class="popuptext alert-danger" id="pop-up">No tiene permiso para realizar esa accion</span>
+        @else if($error == "El archivo seleccionado no es compatible")
+            <span class="popuptext alert-danger" id="pop-up">El archivo seleccionado no es compatible</span>
         @endif
     @empty
     @endforelse

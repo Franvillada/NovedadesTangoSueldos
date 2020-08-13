@@ -8,6 +8,7 @@ use App\Imports\EmployeesImport;
 use Maatwebsite\Excel\Facades\Excel;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use Illuminate\Support\Arr;
+use Maatwebsite\Excel\Helpers\FileTypeDetector;
 
 class EmployeesController extends Controller
 {
@@ -120,7 +121,10 @@ class EmployeesController extends Controller
     }
 
     public function importarLegajos(Request $request)
-    {
+    {  
+        if(FileTypeDetector::detect($request->file('file')) != 'Xlsx'){
+            return back()->withErrors('El archivo seleccionado no es compatible');
+        }
         $newEmployees = Excel::toCollection(new EmployeesImport(), $request->file('file'));
         $empleados = $this->obtenerTodosLosEmpleados();
         if(session()->has('clienteElegido')){
