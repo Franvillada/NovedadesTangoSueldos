@@ -7,6 +7,7 @@ use App\Client;
 use App\Novelty;
 use App\User;
 use App\Imports\NoveltiesImport;
+use App\Imports\ClientsImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Hash;
 
@@ -240,5 +241,29 @@ class BackendController extends Controller
         $superadmin->password = Hash::make($request->password);
         $superadmin->save();
         return redirect()->route('backend_usuarios');
+    }
+
+    public function importarClientes(Request $request){
+        $newClients = Excel::toCollection(new ClientsImport(), $request->file('file'));
+        $clientes = Client::all()->reject(function ($value){
+            return $value->business_name == 'Estudio MR y Asociados';
+        });
+        foreach($newClients[0] as $client){
+            $alreadyExist = 0;
+            foreach($clientes as $cliente){
+                if($cliente->business_name == $client['razon_social']){
+                    $alreadyExist = 1;       
+                }
+            }
+            if($alreadyExist == 0){
+                $newClient = new Client();
+                $newClient->business_name = $client['razon_social']; 
+                $newClient->save();
+            }
+        }
+        $request->session()->put('clientes', Client::all()->reject(function ($value){
+            return $value->business_name == 'Estudio MR y Asociados';
+        }));
+        return redirect()->route('backend_clientes');
     }
 }

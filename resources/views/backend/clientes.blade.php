@@ -7,7 +7,7 @@
     
     <div class="menu_maestros" id="menu_maestros">
         <a href="{{ route('nuevo_cliente') }}" class="btn boton_principal" id="nuevo">Nuevo</a>
-        <form action="{{ route('importar_legajos') }}" method="post" class="importar" enctype="multipart/form-data">
+        <form action="{{ route('importar_clientes') }}" method="post" class="importar" enctype="multipart/form-data">
             @csrf
             <label for="file" class="btn boton_principal mb-0">
                 Importar

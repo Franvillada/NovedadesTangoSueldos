@@ -48,7 +48,8 @@ class TaskSeeder extends Seeder
             ['task' => 'backend/clientes'],
             ['task' => 'backend/usuarios'],
             ['task' => 'editarInformacionPropia'],
-            ['task' => 'registro-novedades/download']
+            ['task' => 'registro-novedades/download'],
+            ['task' => 'backend/importar_clientes']
         ];
         DB::table('tasks')->insert($tasks);
     }

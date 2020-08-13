@@ -33,6 +33,7 @@ Route::middleware('auth','permission')->group(function(){
         Route::get('/backend/editar_cliente', 'BackendController@showEditarClienteForm')->name('editar_cliente');
         Route::post('/backend/editar_cliente', 'BackendController@editarCliente')->name('editar_cliente');
         Route::post('/backend/cambiar_estado_cliente','BackendController@cambiarEstadoCliente')->name('cambiar_estado_cliente');
+        Route::post('/backend/importar_clientes','BackendController@importarClientes')->name('importar_clientes');
 
         Route::get('/backend/novedades', 'BackendController@indexNovedades')->name('backend_novedades');
         Route::get('/backend/nueva_novedad', 'BackendController@showNuevaNovedadForm')->name('nueva_novedad');
