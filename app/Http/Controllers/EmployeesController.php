@@ -20,9 +20,9 @@ class EmployeesController extends Controller
     public function indexLegajos(){
         $active = ['maestros','legajos'];
         if(session()->has('clienteElegido')){
-            $empleados = Employee::where('client_id',session('clienteElegido')->id)->paginate(10);
+            $empleados = Employee::where('client_id',session('clienteElegido')->id)->paginate(20);
         }else{
-            $empleados = Employee::where('client_id',auth()->user()->client->id)->paginate(10);
+            $empleados = Employee::where('client_id',auth()->user()->client->id)->paginate(20);
         }
         $vacacionesGozadasArr = [];
         foreach ($empleados as $empleado) {
@@ -128,7 +128,7 @@ class EmployeesController extends Controller
         $newEmployees = Excel::toCollection(new EmployeesImport(), $request->file('file'));
         
         foreach($newEmployees[0] as $employee){
-            if( (count($employee) != 5) || !(isset($employee['nombre'])) || !(isset($employee['legajo'])) || !(isset($novelty['fecha_de_entrada'])) || !(isset($novelty['vacaciones_correspondientes'])) || !(isset($novelty['scoring'])) ){
+            if( (count($employee) != 5) || !(isset($employee['nombre'])) || !(isset($employee['legajo'])) || !(isset($employee['fecha_de_entrada'])) || !(isset($employee['vacaciones_correspondientes'])) || !(isset($employee['scoring'])) ){
                 return back()->withErrors('El formato de la tabla excel no es correcto');
             }
         }

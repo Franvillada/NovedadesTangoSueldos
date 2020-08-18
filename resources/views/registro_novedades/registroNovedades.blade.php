@@ -84,4 +84,5 @@
         </tbody>
 </table>
 <script type="text/javascript" src="{{ URL::asset('js/maestros.js') }}"></script>
+{{ $registros->links() }}
 @endsection

@@ -29,7 +29,8 @@ class NoveltyRegistersController extends Controller
                         ->join('novelties','novelty_registers.novelty_id','=','novelties.id')
                         ->where('employees.client_id','=',$client_id)
                         ->select('novelty_registers.id','novelty_registers.quantity','novelty_registers.date','novelty_registers.informed','employees.employee_number','employees.name','novelties.code','novelties.description')
-                        ->get();
+                        ->orderBy('novelty_registers.date','DESC')
+                        ->paginate(20);
         return view('registro_novedades/registroNovedades')->with('active','novedades')
                                         ->with('registros',$registros);
     }
@@ -63,8 +64,7 @@ class NoveltyRegistersController extends Controller
     public function showEditarRegistroForm(Request $request){
         $registro = NoveltyRegister::where('id',$request->registro_id)->first();
         $novedades = $registro->employee->client->novelty;
-        /*$registro->date = date('d-m-Y',strtotime($registro->date));
-        */return view('registro_novedades/editarRegistro')
+        return view('registro_novedades/editarRegistro')
                     ->with('active','novedades')
                     ->with('registro',$registro)
                     ->with('novedades',$novedades);
