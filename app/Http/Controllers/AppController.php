@@ -39,24 +39,39 @@ class AppController extends Controller
             $client_id = auth()->user()->client->id;
         }
         $empleados = Employee::where('client_id',$client_id)->get();
-        $bajas = $empleados->reject(function($empleado){
-            return $empleado->leave_date == NULL; 
-        })->count();
-        $cantidad_legajos_actual = $empleados->reject(function($empleado){
-            return $empleado->leave_date !=NULL;
-        })->count();
-        $legajos_al_inicio = $empleados->reject(function($empleado){
-            return $empleado->leave_date <= date('Y-m-d', strtotime('first day of january this year')) && $empleado->leave_date !=NULL;
-        })->count();
-        if($legajos_al_inicio + $cantidad_legajos_actual === 0){
-            $rotacion_del_personal = 0;
-        }else{
-            $rotacion_del_personal = number_format((float)$bajas/(($legajos_al_inicio + $cantidad_legajos_actual)/2)*100,2,'.','');
-        }
+        
+        /* Calculo de la Rotacion del Personal */
+
+            /*Obtengo las Bajas del Periodo */
+            $bajas = $empleados->filter(function($empleado){
+                return date('Y',strtotime($empleado->leave_date)) == now()->year;
+            })->count();
+
+            /* Obtengo la cantidad de Legajos al Inicio del Periodo */
+            $legajos_al_inicio = $empleados->reject(function($empleado){
+                return date('Y',strtotime($empleado->leave_date)) < now()->year || date('Y',strtotime($empleado->entry_date)) >= now()->year;
+            })->count();
+
+            
+            /* Obtengo la cantidad de Legajos Actuales */
+            $cantidad_legajos_actual = $empleados->reject(function($empleado){
+                return $empleado->leave_date !=NULL;
+            })->count();
+            
+            /* Chequeo que no sea una division por 0 y calculo*/
+            if($legajos_al_inicio + $cantidad_legajos_actual === 0){
+                $rotacion_del_personal = 0;
+            }else{
+                $rotacion_del_personal = number_format((float)$bajas/(($legajos_al_inicio + $cantidad_legajos_actual)/2)*100,2,'.','');
+            }
+        
         
         $registros = NoveltyRegister::join('employees','novelty_registers.employee_id','=','employees.id')
                                         ->join('novelties','novelty_registers.novelty_id','=','novelties.id')
                                         ->where('employees.client_id','=',$client_id)->get();
+        
+        /* Calculo del Ausentismo Laboral */
+        
         $ausencias_del_mes =  $registros->filter(function($registro){
             return $registro->absence === 1;
         });
