@@ -166,6 +166,12 @@ class BackendController extends Controller
             return back()->withErrors('El archivo seleccionado no es compatible');
         }
         $newNovelties = Excel::toCollection(new NoveltiesImport(), $request->file('file'));
+        foreach($newNovelties[0] as $novelty){
+            if( (count($novelty) != 3) || !(isset($novelty['codigo'])) || !(isset($novelty['descripcion'])) || !(isset($novelty['unidad'])) ){
+                return back()->withErrors('El formato de la tabla excel no es correcto');
+            }
+        }
+        
         $novedades = Novelty::all();
         
         foreach($newNovelties[0] as $novelty){
@@ -186,7 +192,7 @@ class BackendController extends Controller
                 $newNovelty->unit = $novelty['unidad']; 
                 $newNovelty->save();
             };
-        } 
+        }
         return redirect()->route('backend_novedades');
     }
 
@@ -252,6 +258,11 @@ class BackendController extends Controller
             return back()->withErrors('El archivo seleccionado no es compatible');
         }
         $newClients = Excel::toCollection(new ClientsImport(), $request->file('file'));
+        foreach($newClients[0] as $client){
+            if( (count($client) != 1) || !(isset($client['razon_social'])) ){
+                return back()->withErrors('El formato de la tabla excel no es correcto');
+            }
+        }
         $clientes = Client::all()->reject(function ($value){
             return $value->business_name == 'Estudio MR y Asociados';
         });

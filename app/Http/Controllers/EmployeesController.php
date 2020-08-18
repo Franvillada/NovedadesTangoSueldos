@@ -126,6 +126,13 @@ class EmployeesController extends Controller
             return back()->withErrors('El archivo seleccionado no es compatible');
         }
         $newEmployees = Excel::toCollection(new EmployeesImport(), $request->file('file'));
+        
+        foreach($newEmployees[0] as $employee){
+            if( (count($employee) != 5) || !(isset($employee['nombre'])) || !(isset($employee['legajo'])) || !(isset($novelty['fecha_de_entrada'])) || !(isset($novelty['vacaciones_correspondientes'])) || !(isset($novelty['scoring'])) ){
+                return back()->withErrors('El formato de la tabla excel no es correcto');
+            }
+        }
+        
         $empleados = $this->obtenerTodosLosEmpleados();
         if(session()->has('clienteElegido')){
             $client_id = session('clienteElegido')->id;
