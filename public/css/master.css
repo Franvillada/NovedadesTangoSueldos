@@ -315,20 +315,34 @@ a:hover{
 /* Kpi's Styles */
 
 .tablero_kpi{
-    margin: 10vh 15vw;
+    margin: 12vh 15vw;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
+    text-align: center;
 }
 
-.tarjeta_kpi{
+.tablero_kpi h5, .tablero_kpi p{
+    margin: 0;
+}
+
+.tablero_kpi .card{
     height: 25vh;
+}
+
+.tablero_kpi .card-body{
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid grey;
-    margin: 2%;
+    justify-content: space-evenly;
+}
+
+.kpi{
+    font-size: 1.3rem;
+    font-weight: bold;    
+}
+
+.tablero_kpi .periodo{
+    font-size: 0.9rem;
 }
 
 /* Pop up Error */

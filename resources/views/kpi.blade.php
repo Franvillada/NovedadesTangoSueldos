@@ -3,25 +3,46 @@
 @section('sub-content')
 
 <div class="tablero_kpi">
-    <div class="tarjeta_kpi">
-        <h3>Rotacion del Personal</h3>
-        <p>{{$rotacion_del_personal}} %</p>
-        <p>Anual</p>
+
+    <div class="card mb-3 mr-3">
+        <div class="card-header">
+            <h5>Rotacion del Personal</h5>
+        </div>
+        <div class="card-body">
+            <p class="kpi">{{$rotacion_del_personal}} %</p>
+            <p class="periodo">(Anual)</p>
+        </div>
     </div>
-    <div class="tarjeta_kpi">
-        <h3>Ausentismo Laboral</h3>
-        <p>{{$ausentismo_laboral}}</p>
-        <p>Mes</p>
+
+    <div class="card mb-3 ml-3">
+        <div class="card-header">
+            <h5>Ausentismo Laboral</h5>
+        </div>
+        <div class="card-body">
+            <p class="kpi">{{$ausentismo_laboral}} %</p>
+            <p class="periodo">(Mensual)</p>
+        </div>
     </div>
-    <div class="tarjeta_kpi">
-        <h3>Accidentalidad Laboral</h3>
-        <h4>Legajos</h4>
-        <p>{{$accidentalidad_laboral_legajos}}</p>
+
+    <div class="card mt-3 mr-3">
+        <div class="card-header">
+            <h5>Accidentalidad Laboral (Legajos)</h5>
+        </div>
+        <div class="card-body">
+            <p class="kpi">{{$accidentalidad_laboral_legajos}}</p>
+            <p class="periodo">(Mensual)</p>
+        </div>
     </div>
-    <div class="tarjeta_kpi">
-        <h3>Accidentalidad Laboral</h3>
-        <h4>Dias</h4>
-        <p>{{$accidentalidad_laboral_dias}}</p>
+
+    <div class="card mt-3 ml-3">
+        <div class="card-header">
+        <h5>Accidentalidad Laboral (Dias)</h5>
+        </div>
+        <div class="card-body">
+            <p class="kpi">{{$accidentalidad_laboral_dias}}</p>
+            <p class="periodo">(Mensual)</p>
+        </div>
     </div>
+   
 </div>
 @endsection
