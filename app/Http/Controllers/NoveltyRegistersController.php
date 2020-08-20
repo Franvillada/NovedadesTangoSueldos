@@ -102,9 +102,13 @@ class NoveltyRegistersController extends Controller
 
     public function obtenerTodosLosEmpleados(){
         if(session()->has('clienteElegido')){
-            $empleados = Employee::where('client_id', session('clienteElegido')->id)->get();
+            $empleados = Employee::where('client_id', session('clienteElegido')->id)
+                                    ->where('active','=',1)
+                                    ->get();
         }else{
-            $empleados = Employee::where('client_id', auth()->user()->client->id)->get();
+            $empleados = Employee::where('client_id', auth()->user()->client->id)
+                                    ->where('active','=',1)
+                                    ->get();
         }
         return $empleados;
     }
