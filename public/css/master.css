@@ -229,6 +229,11 @@ a:hover{
 .maestros_form p{
     background-color: #e9ecef;
 }
+
+.maestros_form .alert-danger,
+.maestros_form_usuarios .alert-danger{
+    width: 75%;
+}
 /* Maestros Usuarios Styles */
 
 .maestros_form_usuarios{

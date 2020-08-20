@@ -129,13 +129,17 @@ class EmployeesController extends Controller
         
         foreach($newEmployees[0] as $employee){
             if( (count($employee) != 5) || !(isset($employee['nombre'])) || !(isset($employee['legajo'])) || !(isset($employee['fecha_de_entrada'])) || !(isset($employee['vacaciones_correspondientes'])) || !(isset($employee['scoring'])) ){
+                $request->session()->flash('status','Fallo la Importacion');
                 return back()->withErrors('El formato de la tabla excel no es correcto');
             }
             elseif($employee['nombre'] == NULL){
+                $request->session()->flash('status','Fallo la Importacion');
                 return back()->withErrors('Falta completar nombre de uno o mas legajos');
             }elseif($employee['legajo'] == NULL){
+                $request->session()->flash('status','Fallo la Importacion');
                 return back()->withErrors('Falta completar numero de uno o mas legajos');
             }elseif($employee['fecha_de_entrada'] == NULL){
+                $request->session()->flash('status','Fallo la Importacion');
                 return back()->withErrors('Falta completar fecha de ingreso de uno o mas legajos');
             }
         }

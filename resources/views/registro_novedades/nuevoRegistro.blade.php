@@ -21,6 +21,9 @@
                     <option value="">No hay legajos cargadas</option>
                 @endforelse
             </select>
+            <div class="{{ $errors->has('employee') ? 'alert alert-danger' : '' }}">
+                {!! $errors->first('employee', '<span>:message</span>') !!}
+            </div>
         </div>
 
         <div class="form-group">
@@ -44,6 +47,9 @@
                     <option value="">No hay Novedades cargadas</option>
                 @endforelse
             </select>
+            <div class="{{ $errors->has('novelty') ? 'alert alert-danger' : '' }}">
+                {!! $errors->first('novelty', '<span>:message</span>') !!}
+            </div>
         </div>
 
         <div class="form-group">
@@ -53,7 +59,10 @@
                     name="quantity" 
                     id="quantity"
                     value="{{ old('quantity') }}"
-                    placeholder="">    
+                    placeholder="">
+            <div class="{{ $errors->has('quantity') ? 'alert alert-danger' : '' }}">
+                {!! $errors->first('quantity', '<span>:message</span>') !!}
+            </div>  
         </div>
         
     </form>

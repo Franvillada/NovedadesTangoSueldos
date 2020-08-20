@@ -32,6 +32,9 @@ class NoveltysController extends Controller
     }
 
     public function nuevaRelacion(Request $request){
+        $data = $this->validate($request,[
+            'novedades' => 'required'
+        ]);
         if(session()->has('clienteElegido')){
             $client = session('clienteElegido');
         }else{

@@ -49,10 +49,11 @@
         </div>
         
     </div>
-    @forelse($errors->all() as $error)
-        <span class="popuptext alert-danger" id="pop-up">{{$error}}</span>
-    @empty
-    @endforelse
+    @if(session()->has('status'))
+        @foreach($errors->all() as $error)
+            <span class="popuptext alert-danger" id="pop-up"><strong>{{session('status')}}:</strong> {{$error}}</span>
+        @endforeach
+    @endif
     <div class="main-container">
         @yield('content')
     </div>

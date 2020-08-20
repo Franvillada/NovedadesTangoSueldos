@@ -150,6 +150,28 @@ return [
         'password' => [
             'required' => 'Debe ingresar una contraseña'
         ],
+        'novedades' => [
+            'required' => 'Debe seleccionar una novedad'
+        ],
+        'legajo' => [
+            'required' => 'El Legajo es requerido'
+        ],
+        'name' => [
+            'required' => 'El Nombre es requerido'
+        ],
+        'entry_date' => [
+            'required' => 'La Fecha de Entrada es requerida'
+        ],
+        'vacations' => [
+            'required' => 'Las Vacaciones Correspondientes son requeridas'
+        ],
+        'username' => [
+            'required' => 'El Nombre de Usuario es requerido'
+        ],
+        'employee' => [
+            'required' => 'Debe seleccionar un empleado'
+        ]
+
     ],
 
     /*

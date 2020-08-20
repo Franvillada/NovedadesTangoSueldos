@@ -197,12 +197,16 @@ class BackendController extends Controller
         $newNovelties = Excel::toCollection(new NoveltiesImport(), $request->file('file'));
         foreach($newNovelties[0] as $novelty){
             if( (count($novelty) != 3) || !(isset($novelty['codigo'])) || !(isset($novelty['descripcion'])) || !(isset($novelty['unidad'])) ){
+                $request->session()->flash('status','Fallo la Importacion');
                 return back()->withErrors('El formato de la tabla excel no es correcto');
             }elseif($novelty['codigo'] == NULL){
+                $request->session()->flash('status','Fallo la Importacion');
                 return back()->withErrors('Falta completar codigo de una o mas novedades');
             }elseif($novelty['descripcion'] == NULL){
+                $request->session()->flash('status','Fallo la Importacion');
                 return back()->withErrors('Falta completar descripcion de una o mas novedades');
             }elseif($novelty['unidad'] == NULL){
+                $request->session()->flash('status','Fallo la Importacion');
                 return back()->withErrors('Falta completar unidad de una o mas novedades');
             }
         }
@@ -296,8 +300,10 @@ class BackendController extends Controller
         $newClients = Excel::toCollection(new ClientsImport(), $request->file('file'));
         foreach($newClients[0] as $client){
             if( (count($client) != 1) || !(isset($client['razon_social'])) ){
+                $request->session()->flash('status','Fallo la Importacion');
                 return back()->withErrors('El formato de la tabla excel no es correcto');
             }elseif($client['razon_social'] == NULL){
+                $request->session()->flash('status','Fallo la Importacion');
                 return back()->withErrors('Falta completar la razon social de uno o mas clientes');
             }
         }

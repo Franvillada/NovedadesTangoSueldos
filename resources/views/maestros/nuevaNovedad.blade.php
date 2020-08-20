@@ -17,6 +17,9 @@
                 <option value="{{ $novedad->code }}">{{ $novedad->code}}: {{$novedad->description}}</option>
                 @endforeach
             </select>
+            <div class="{{ $errors->has('novedades') ? 'alert alert-danger' : '' }}">
+                {!! $errors->first('novedades', '<span>:message</span>') !!}
+            </div> 
         </div>
     </form>
     

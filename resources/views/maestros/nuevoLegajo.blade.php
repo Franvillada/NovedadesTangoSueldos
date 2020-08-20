@@ -34,7 +34,7 @@
                     value="{{ old('name') }}"
                     placeholder="">
             <div class="{{ $errors->has('name') ? 'alert alert-danger' : '' }}">
-                {!! $errors->first('username', '<span>:message</span>') !!}
+                {!! $errors->first('name', '<span>:message</span>') !!}
             </div>
         </div>
         
