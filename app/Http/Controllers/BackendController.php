@@ -169,6 +169,12 @@ class BackendController extends Controller
         foreach($newNovelties[0] as $novelty){
             if( (count($novelty) != 3) || !(isset($novelty['codigo'])) || !(isset($novelty['descripcion'])) || !(isset($novelty['unidad'])) ){
                 return back()->withErrors('El formato de la tabla excel no es correcto');
+            }elseif($novelty['codigo'] == NULL){
+                return back()->withErrors('Falta completar codigo de una o mas novedades');
+            }elseif($novelty['descripcion'] == NULL){
+                return back()->withErrors('Falta completar descripcion de una o mas novedades');
+            }elseif($novelty['unidad'] == NULL){
+                return back()->withErrors('Falta completar unidad de una o mas novedades');
             }
         }
         
@@ -261,6 +267,8 @@ class BackendController extends Controller
         foreach($newClients[0] as $client){
             if( (count($client) != 1) || !(isset($client['razon_social'])) ){
                 return back()->withErrors('El formato de la tabla excel no es correcto');
+            }elseif($client['razon_social'] == NULL){
+                return back()->withErrors('Falta completar la razon social de uno o mas clientes');
             }
         }
         $clientes = Client::all()->reject(function ($value){

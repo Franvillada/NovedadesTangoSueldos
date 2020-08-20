@@ -131,6 +131,13 @@ class EmployeesController extends Controller
             if( (count($employee) != 5) || !(isset($employee['nombre'])) || !(isset($employee['legajo'])) || !(isset($employee['fecha_de_entrada'])) || !(isset($employee['vacaciones_correspondientes'])) || !(isset($employee['scoring'])) ){
                 return back()->withErrors('El formato de la tabla excel no es correcto');
             }
+            elseif($employee['nombre'] == NULL){
+                return back()->withErrors('Falta completar nombre de uno o mas legajos');
+            }elseif($employee['legajo'] == NULL){
+                return back()->withErrors('Falta completar numero de uno o mas legajos');
+            }elseif($employee['fecha_de_entrada'] == NULL){
+                return back()->withErrors('Falta completar fecha de ingreso de uno o mas legajos');
+            }
         }
         
         $empleados = $this->obtenerTodosLosEmpleados();

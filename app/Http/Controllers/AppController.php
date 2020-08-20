@@ -51,9 +51,8 @@ class AppController extends Controller
 
             /* Obtengo la cantidad de Legajos al Inicio del Periodo */
             $legajos_al_inicio = $empleados->reject(function($empleado){
-                return date('Y',strtotime($empleado->leave_date)) < now()->year || date('Y',strtotime($empleado->entry_date)) >= now()->year;
+                return ( (date('Y',strtotime($empleado->leave_date)) < now()->year && $empleado->leave_date != NULL) || ( date('Y',strtotime($empleado->entry_date)) == now()->year) );
             })->count();
-
             
             /* Obtengo la cantidad de Legajos Actuales */
             $cantidad_legajos_actual = $empleados->reject(function($empleado){
@@ -71,6 +70,7 @@ class AppController extends Controller
         $registros = NoveltyRegister::join('employees','novelty_registers.employee_id','=','employees.id')
                                         ->join('novelties','novelty_registers.novelty_id','=','novelties.id')
                                         ->where('employees.client_id','=',$client_id)
+                                        ->whereYear('novelty_registers.date',now()->year)
                                         ->whereMonth('novelty_registers.date',now()->month)
                                         ->get();
         

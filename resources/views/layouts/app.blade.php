@@ -50,13 +50,7 @@
         
     </div>
     @forelse($errors->all() as $error)
-        @if($error == "No tiene permisos para realizar esta accion")
-            <span class="popuptext alert-danger" id="pop-up">No tiene permiso para realizar esa accion</span>
-        @elseif($error == "El archivo seleccionado no es compatible")
-            <span class="popuptext alert-danger" id="pop-up">El archivo seleccionado no es compatible</span>
-        @elseif($error == "El formato de la tabla excel no es correcto")
-            <span class="popuptext alert-danger" id="pop-up">El formato de la tabla excel no es correcto</span>
-        @endif
+        <span class="popuptext alert-danger" id="pop-up">{{$error}}</span>
     @empty
     @endforelse
     <div class="main-container">
@@ -66,7 +60,7 @@
         if(document.getElementById('pop-up')){
             setTimeout(function(){
                 document.getElementById('pop-up').style.display = 'none'
-            },1500);
+            },3000);
         }
     </script>
 </body>
