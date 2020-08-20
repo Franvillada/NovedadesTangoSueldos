@@ -31,16 +31,17 @@ class UsersController extends Controller
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'active' => 1])){
             if(auth()->user()->role->role == 'superadmin'){
                 $request->session()->put('clientes', Client::all()->reject(function ($value,$key){
-                    return $value->business_name == 'Estudio MR y Asociados';
+                    return ($value->business_name == 'Estudio MR y Asociados') || ($value->active == 0) ;
                 }));
                 return redirect()->route('elegir_cliente');
             }
             
             return redirect()->route('kpi');
-        }
-        return back()
+        }else{
+            return back()
             ->withErrors(['email' => 'Las credenciales no coinciden con los registros'])
             ->withInput(request(['email']));
+        }
     }
 
     public function showNuevoUsuarioForm(){

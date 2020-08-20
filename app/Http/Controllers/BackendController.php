@@ -34,7 +34,7 @@ class BackendController extends Controller
         $cliente->save();
 
         $clients = Client::all()->reject(function ($value){
-            return $value->business_name == 'Estudio MR y Asociados';
+            return ($value->business_name == 'Estudio MR y Asociados') || ($value->active == 0) ;
         });
         $request->session()->put('clientes', $clients);
         
@@ -61,10 +61,35 @@ class BackendController extends Controller
 
     public function cambiarEstadoCliente(Request $request){
         $cliente = Client::where('business_name',$request->business_name)->get()->first();
+        if($cliente->active == 1){
+            $this->cambiarEstadoUsuarios($cliente,$cliente->user);
+            $cliente->active = !$cliente->active;
+        }elseif($cliente->active == 0){
+            $this->cambiarEstadoUsuarios($cliente,$cliente->user);
+            $cliente->active = !$cliente->active;
+        }
         
-        $cliente->active = !$cliente->active;
         $cliente->save();
+        $clients = Client::all()->reject(function ($value){
+            return ($value->business_name == 'Estudio MR y Asociados') || ($value->active == 0) ;
+        });
+        $request->session()->put('clientes', $clients);
         return redirect()->route('backend_clientes');
+    }
+
+    public function cambiarEstadoUsuarios($cliente,$usuarios){
+        if($cliente->active == 1){
+            foreach($usuarios as $usuario){
+                $usuario->active = 0;
+                $usuario->save();
+            }
+        }elseif($cliente->active == 0){
+            foreach($usuarios as $usuario){
+                $usuario->active = 1;
+                $usuario->save();
+            }
+        }
+        
     }
 
     public function indexNovedades(){

@@ -13,7 +13,7 @@ class AppController extends Controller
 {
     public function elegirClienteForm(){
         $clients = Client::all()->reject(function ($value,$key){
-            return $value->business_name == 'Estudio MR y Asociados';
+            return ($value->business_name == 'Estudio MR y Asociados') || ($value->active == 0) ;
         });
         return view('elegirCliente')->with('clients',$clients);
     }
