@@ -22,7 +22,7 @@ class NoveltysController extends Controller
     
     public function showNuevaRelacionForm(){
         $active = ['maestros','novedades'];
-        $novedades = Novelty::all();
+        $novedades = Novelty::where('active','=',1)->get();
         $novedades_disponibles = $novedades->reject(function($value){
             $novedades_en_uso = $this->obtenerNovedadesEnUso();
             return $novedades_en_uso->contains($value);

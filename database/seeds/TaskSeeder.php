@@ -26,7 +26,7 @@ class TaskSeeder extends Seeder
             ['task' => 'backend/editar_cliente'],
             ['task' => 'backend/cambiar_estado_cliente'],
             ['task' => 'maestros/nueva_relacion'],
-            ['task' => 'maestros/elimninar_relacion'],
+            ['task' => 'maestros/eliminar_relacion'],
             ['task' => 'maestros/importar_relacion'],
             ['task' => 'maestros/novedades'],
             ['task' => 'maestros/nuevo_legajo'],

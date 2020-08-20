@@ -61,14 +61,8 @@ class BackendController extends Controller
 
     public function cambiarEstadoCliente(Request $request){
         $cliente = Client::where('business_name',$request->business_name)->get()->first();
-        if($cliente->active == 1){
-            $this->cambiarEstadoUsuarios($cliente,$cliente->user);
-            $cliente->active = !$cliente->active;
-        }elseif($cliente->active == 0){
-            $this->cambiarEstadoUsuarios($cliente,$cliente->user);
-            $cliente->active = !$cliente->active;
-        }
-        
+        $this->cambiarEstadoUsuarios($cliente,$cliente->user);
+        $cliente->active = !$cliente->active;
         $cliente->save();
         $clients = Client::all()->reject(function ($value){
             return ($value->business_name == 'Estudio MR y Asociados') || ($value->active == 0) ;
@@ -178,10 +172,22 @@ class BackendController extends Controller
 
     public function cambiarEstadoNovedad(Request $request){
         $novedad = Novelty::where('code',$request->code)->get()->first();
+        if($novedad->active == 1){
+            $this->eliminarRelaciones($novedad);
+        }
         $novedad->active = !$novedad->active;
         $novedad->save();
         
         return redirect()->route('backend_novedades');
+    }
+    
+    public function eliminarRelaciones($novedad){
+        $clientes = Client::all()->reject(function ($value){
+            return $value->business_name == 'Estudio MR y Asociados';
+        });
+        foreach($clientes as $cliente){
+            $cliente->novelty()->detach(Novelty::where('code',$novedad->code)->get()->first()->id);    
+        }
     }
 
     public function importarNovedad(Request $request){
