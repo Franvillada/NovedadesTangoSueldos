@@ -19,7 +19,7 @@ class UsersController extends Controller
     public function indexUsuarios(){
         $active = ['maestros','usuarios'];
         return view('maestros.usuarios')->with('active',$active)
-                                        ->with('users',$this->obtenerTodosLosUsuarios());
+                                        ->with('users',$this->obtenerTodosLosUsuarios()->paginate(20));
     }
 
     public function login(Request $request){

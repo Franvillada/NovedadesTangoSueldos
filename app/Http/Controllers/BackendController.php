@@ -16,9 +16,7 @@ class BackendController extends Controller
 {
 
     public function indexClientes(){
-        $queryClients = Client::query();
-        $queryClients->where('business_name','!=','Estudio MR y Asociados');
-        $clientes = $queryClients->paginate(10);
+        $clientes = Client::where('business_name','!=','Estudio MR y Asociados')->paginate(20);
         return view('backend.clientes')->with('clientes',$clientes);
     }
 
@@ -70,7 +68,7 @@ class BackendController extends Controller
     }
 
     public function indexNovedades(){
-        $novedades = Novelty::paginate(10);
+        $novedades = Novelty::paginate(20);
         return view('backend.novedades')->with('novedades',$novedades);
     }
 
@@ -203,7 +201,8 @@ class BackendController extends Controller
     }
 
     public function indexUsuarios(){
-        return view('backend.usuarios')->with('users',User::where('client_id',auth()->user()->client->id)->get());
+        $usuarios = User::where('client_id',auth()->user()->client->id)->paginate(20);
+        return view('backend.usuarios')->with('usuarios',$usuarios);
     }
 
     public function showNuevoSuperadminForm(){

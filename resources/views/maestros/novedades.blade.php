@@ -50,4 +50,5 @@
     </tbody>
 </table>
 <script type="text/javascript" src="{{ URL::asset('js/maestros.js') }}"></script>
+{{ $novedades->links()}}
 @endsection

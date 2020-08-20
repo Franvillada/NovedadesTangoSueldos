@@ -28,11 +28,11 @@
             </tr>
         </thead>
         <tbody>
-        @forelse($users as $user)
+        @forelse($usuarios as $usuario)
         <tr>
-            <td>{{ $user->email }}</td>
-            <td>{{ $user->username }}</td>
-            <td>{{ ($user->active) ? 'Habilitado' : 'Inhabilitado' }}</td>
+            <td>{{ $usuario->email }}</td>
+            <td>{{ $usuario->username }}</td>
+            <td>{{ ($usuario->active) ? 'Habilitado' : 'Inhabilitado' }}</td>
         </tr>
         @empty
             <tr>
@@ -42,4 +42,5 @@
         </tbody>
 </table>
 <script type="text/javascript" src="{{ URL::asset('js/maestros.js') }}"></script>
+{{ $usuarios->links() }}
 @endsection
