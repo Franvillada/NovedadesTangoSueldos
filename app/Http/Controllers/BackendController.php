@@ -16,7 +16,9 @@ class BackendController extends Controller
 {
 
     public function indexClientes(){
-        $clientes = Client::where('business_name','!=','Estudio MR y Asociados')->paginate(20);
+        $clientes = Client::where('business_name','!=','Estudio MR y Asociados')
+                            ->orderBy('business_name','ASC')
+                            ->paginate(20);
         return view('backend.clientes')->with('clientes',$clientes);
     }
 
@@ -87,7 +89,7 @@ class BackendController extends Controller
     }
 
     public function indexNovedades(){
-        $novedades = Novelty::paginate(20);
+        $novedades = Novelty::orderBy('code','ASC')->paginate(20);
         return view('backend.novedades')->with('novedades',$novedades);
     }
 
@@ -236,7 +238,9 @@ class BackendController extends Controller
     }
 
     public function indexUsuarios(){
-        $usuarios = User::where('client_id',auth()->user()->client->id)->paginate(20);
+        $usuarios = User::where('client_id',auth()->user()->client->id)
+                        ->orderBy('username','ASC')
+                        ->paginate(20);
         return view('backend.usuarios')->with('usuarios',$usuarios);
     }
 

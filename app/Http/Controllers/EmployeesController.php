@@ -20,9 +20,13 @@ class EmployeesController extends Controller
     public function indexLegajos(){
         $active = ['maestros','legajos'];
         if(session()->has('clienteElegido')){
-            $empleados = Employee::where('client_id',session('clienteElegido')->id)->paginate(20);
+            $empleados = Employee::where('client_id',session('clienteElegido')->id)
+                                ->orderBy('employee_number','ASC')
+                                ->paginate(20);
         }else{
-            $empleados = Employee::where('client_id',auth()->user()->client->id)->paginate(20);
+            $empleados = Employee::where('client_id',auth()->user()->client->id)
+                                ->orderBy('employee_number','ASC')
+                                ->paginate(20);;
         }
         $vacacionesGozadasArr = [];
         foreach ($empleados as $empleado) {

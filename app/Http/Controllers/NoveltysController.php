@@ -15,7 +15,9 @@ class NoveltysController extends Controller
      */
     public function indexNovedades(){
         $active = ['maestros','novedades'];
-        $novedades = $this->obtenerNovedadesEnUso()->paginate(20);
+        $novedades = $this->obtenerNovedadesEnUso()
+                            ->sortBy('code')                    
+                            ->paginate(20);
         return view('maestros.novedades')   ->with('active',$active)
                                             ->with('novedades',$novedades);
     }
