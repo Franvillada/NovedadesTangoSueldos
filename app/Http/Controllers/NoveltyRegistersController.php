@@ -124,8 +124,14 @@ class NoveltyRegistersController extends Controller
     }
 
     public function showExportarForm(){
+        $years = collect([]);
+        for($i=1900;$i<=now()->year;$i++){
+            $years->push($i);
+        }
+        $years = $years->sortDesc();
         return view('registro_novedades/exportarRegistros')
-                    ->with('active','novedades');
+                    ->with('active','novedades')
+                    ->with('years',$years);
     }
 
     public function storeExcel(Request $request){
@@ -166,7 +172,8 @@ class NoveltyRegistersController extends Controller
                         ->join('novelties','novelty_registers.novelty_id','=','novelties.id')
                         ->where('employees.client_id','=',$client_id)
                         ->select('novelty_registers.id','novelty_registers.quantity','novelty_registers.date','novelty_registers.informed','employees.employee_number','employees.name','novelties.code','novelties.description')
-                        ->get();
+                        ->orderBy('novelty_registers.date','DESC')
+                        ->paginate(20);
         return view('registro_novedades/registroNovedades')->with('active','novedades')
                                         ->with('registros',$registros)
                                         ->with('informado',1);
