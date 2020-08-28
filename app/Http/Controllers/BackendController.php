@@ -196,7 +196,13 @@ class BackendController extends Controller
         if(FileTypeDetector::detect($request->file('file')) != 'Xlsx'){
             return back()->withErrors('El archivo seleccionado no es compatible');
         }
-        $newNovelties = Excel::toCollection(new NoveltiesImport(), $request->file('file'));
+        try{
+            $newNovelties = Excel::toCollection(new NoveltiesImport(), $request->file('file'));
+        }catch(\Exception $ex){
+            $request->session()->flash('status','Fallo la Importacion');
+            return back()->withErrors('Algo salio mal. Si el Error sigue ocurriendo contacta al proveedor del servicio');
+        }
+        
         foreach($newNovelties[0] as $novelty){
             if( (count($novelty) != 3) || !(isset($novelty['codigo'])) || !(isset($novelty['descripcion'])) || !(isset($novelty['unidad'])) ){
                 $request->session()->flash('status','Fallo la Importacion');
@@ -301,7 +307,13 @@ class BackendController extends Controller
         if(FileTypeDetector::detect($request->file('file')) != 'Xlsx'){
             return back()->withErrors('El archivo seleccionado no es compatible');
         }
-        $newClients = Excel::toCollection(new ClientsImport(), $request->file('file'));
+        try{
+            $newClients = Excel::toCollection(new ClientsImport(), $request->file('file'));
+        }catch(\Exception $ex){
+            $request->session()->flash('status','Fallo la Importacion');
+            return back()->withErrors('Algo salio mal. Si el Error sigue ocurriendo contacta al proveedor del servicio');
+        }
+        
         foreach($newClients[0] as $client){
             if( (count($client) != 1) || !(isset($client['razon_social'])) ){
                 $request->session()->flash('status','Fallo la Importacion');

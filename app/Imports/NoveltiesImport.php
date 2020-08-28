@@ -2,23 +2,18 @@
 
 namespace App\Imports;
 
-use App\Novelty;
-use Maatwebsite\Excel\Concerns\ToModel;
-use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
-class NoveltiesImport implements ToModel, WithHeadingRow
+class NoveltiesImport implements WithMultipleSheets
 {
     /**
     * @param array $row
     *
     * @return \Illuminate\Database\Eloquent\Model|null
     */
-    public function model(array $row)
-    {
-        return new Novelty([
-            'code' => $row['codigo'],
-            'description' => $row['descripcion'],
-            'unit' => $row['unidad'],
-        ]);
+    public function sheets(): array{
+        return[
+            0 => new NoveltiesSheetImport(),
+        ];
     }
 }

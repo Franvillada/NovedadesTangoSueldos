@@ -134,7 +134,7 @@ class EmployeesController extends Controller
             $newEmployees = Excel::toCollection(new EmployeesImport(), $request->file('file'));
         }catch(\Exception $ex){
             $request->session()->flash('status','Fallo la Importacion');
-            return back()->withErrors('Something Wrong');
+            return back()->withErrors('Algo salio mal. Si el Error sigue ocurriendo contacta al proveedor del servicio');
         }
         
         foreach($newEmployees[0] as $employee){
