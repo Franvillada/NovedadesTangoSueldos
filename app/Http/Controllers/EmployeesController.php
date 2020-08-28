@@ -9,6 +9,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use Illuminate\Support\Arr;
 use Maatwebsite\Excel\Helpers\FileTypeDetector;
+use Carbon\Carbon;
 
 class EmployeesController extends Controller
 {
@@ -129,7 +130,12 @@ class EmployeesController extends Controller
         if(FileTypeDetector::detect($request->file('file')) != 'Xlsx'){
             return back()->withErrors('El archivo seleccionado no es compatible');
         }
-        $newEmployees = Excel::toCollection(new EmployeesImport(), $request->file('file'));
+        try{
+            $newEmployees = Excel::toCollection(new EmployeesImport(), $request->file('file'));
+        }catch(\Exception $ex){
+            $request->session()->flash('status','Fallo la Importacion');
+            return back()->withErrors('Something Wrong');
+        }
         
         foreach($newEmployees[0] as $employee){
             if( (count($employee) != 5) || !(isset($employee['nombre'])) || !(isset($employee['legajo'])) || !(isset($employee['fecha_de_entrada'])) || !(isset($employee['vacaciones_correspondientes'])) || !(isset($employee['scoring'])) ){
@@ -159,7 +165,11 @@ class EmployeesController extends Controller
             foreach($empleados as $empleado){
                 if($empleado->employee_number == $employee['legajo']){
                     $empleado->name = $employee['nombre'];
-                    $empleado->entry_date = Date::excelToDateTimeObject($employee['fecha_de_entrada']);
+                    try {
+                        $empleado->entry_date = Date::excelToDateTimeObject($employee['fecha_de_entrada']);
+                    } catch (\Exception $ex) {
+                        $empleado->entry_date = date('Y-m-d',strtotime(str_replace('/','-',$employee['fecha_de_entrada'])));
+                    }
                     $empleado->vacations = $employee['vacaciones_correspondientes'];
                     $empleado->scoring = $employee['scoring'];
                     $empleado->save();
@@ -171,8 +181,12 @@ class EmployeesController extends Controller
                 $newEmployee = new Employee();
                 $newEmployee->client_id = $client_id;
                 $newEmployee->name = $employee['nombre'];
-                $newEmployee->employee_number = $employee['legajo']; 
-                $newEmployee->entry_date = Date::excelToDateTimeObject($employee['fecha_de_entrada']);
+                try {
+                    $newEmployee->entry_date = Date::excelToDateTimeObject($employee['fecha_de_entrada']);
+                } catch (\Exception $ex) {
+                    $newEmployee->entry_date = date('Y-m-d',strtotime(str_replace('/','-',$employee['fecha_de_entrada'])));
+                }
+                $newEmployee->employee_number = $employee['legajo'];
                 $newEmployee->vacations = $employee['vacaciones_correspondientes'];
                 $newEmployee->scoring = $employee['scoring'];
                 $newEmployee->save();

@@ -2,25 +2,19 @@
 
 namespace App\Imports;
 
-use App\Employee;
-use Maatwebsite\Excel\Concerns\ToModel;
-use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
-class EmployeesImport implements ToModel, WithHeadingRow
+class EmployeesImport implements WithMultipleSheets
 {
     /**
     * @param array $row
     *
     * @return \Illuminate\Database\Eloquent\Model|null
     */
-    public function model(array $row)
-    {
-        return new Employee([
-            'name' => $row['nombre'],
-            'employee_number' => $row['legajo'],
-            'entry_date' => $row['fecha_de_entrada'],
-            'vacations' => $row['vacaciones_correspondientes'],
-            'scoring' => $row['scoring'],
-        ]);
+
+    public function sheets(): array{
+        return[
+            0 => new EmployeesSheetImport(),
+        ];
     }
 }
